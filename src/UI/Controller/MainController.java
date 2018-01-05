@@ -1,9 +1,10 @@
 package UI.Controller;
 
 import Data.Attribute;
+import Data.DataManager;
+import Data.Rule;
 import UI.Main;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -42,72 +43,77 @@ public class MainController implements Initializable {
         });
     }
 
+    TreeItem currentNode;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Data.Item Q1 = (Data.Item) Data.DataManager.getQuestion(Data.DataManager.getTree().getChildren().get(0).getChildren().get(0).getChildren().get(0)).getValue();
+        currentNode = Data.DataManager.getPreferObject(DataManager.getTree());
 
-        showQuestion(Q1);
+        processNextQuestion();
     }
 
-    public void showQuestion(Data.Item Q1) {
-        questionLabel.setText(Q1.getAttribute().getText());
+    private void processNextQuestion() {
+        //magic begins
+
+        Rule currentRule = (Rule) DataManager.getQuestion(currentNode).getValue();
+
+        if (currentRule.isUsed()) {
+            currentNode = Data.DataManager.getPreferObject(DataManager.getTree());
+            currentRule = (Rule) DataManager.getQuestion(currentNode).getValue();
+        }
+
+        showQuestion(currentRule);
+    }
+
+    private void showQuestion(Rule rule) {
+        questionLabel.setText(rule.getAttribute().getText());
 
         buttonsBox.getChildren().clear();
 
-        if (Q1.getAttribute().getType() == Attribute.Type.QUESTION) {
-            if (Q1.getAttribute().getValueType() == Attribute.ValueType.TRUE_FALSE) {
+        if (rule.getAttribute().getType() == Attribute.Type.QUESTION) {
+            if (rule.getAttribute().getValueType() == Attribute.ValueType.TRUE_FALSE || rule.getAttribute().getValueType() == Attribute.ValueType.TRUE_FALSE_DONT_KNOW) {
 
                 Button button1 = new Button("Да");
                 button1.setOnAction(e -> {
-                    Q1.setAsked(true);
-                    Q1.getAttribute().setValue(1);
+                    rule.setUsed(true);
+                    rule.getAttribute().setValue(1);
+                    processNextQuestion();
                 });
                 buttonsBox.getChildren().add(button1);
 
-                Button button2 = new Button("НЕТ!!!");
+                Button button2 = new Button("Нет");
                 button2.setOnAction(e -> {
-                    Q1.setAsked(true);
-                    Q1.getAttribute().setValue(0);
+                    System.out.println("lol");
+                    rule.setUsed(true);
+                    rule.getAttribute().setValue(0);
+                    processNextQuestion();
                 });
                 buttonsBox.getChildren().add(button2);
 
-            } else if (Q1.getAttribute().getValueType() == Attribute.ValueType.TRUE_FALSE_DONT_KNOW) {
+                if (rule.getAttribute().getValueType() == Attribute.ValueType.TRUE_FALSE_DONT_KNOW) {
+                    Button button3 = new Button("Не знаю");
+                    button3.setOnAction(e -> {
+                        rule.setUsed(true);
+                        rule.getAttribute().setValue(-1);
+                        processNextQuestion();
+                    });
+                    buttonsBox.getChildren().add(button3);
+                }
 
-                Button button1 = new Button("Да");
-                button1.setOnAction(e -> {
-                    Q1.setAsked(true);
-                    Q1.getAttribute().setValue(1);
-                });
-                buttonsBox.getChildren().add(button1);
+            } else if (rule.getAttribute().getValueType() == Attribute.ValueType.STRING) {
 
-                Button button2 = new Button("НЕТ!!!");
-                button2.setOnAction(e -> {
-                    Q1.setAsked(true);
-                    Q1.getAttribute().setValue(0);
-                });
-                buttonsBox.getChildren().add(button2);
-
-                Button button3 = new Button("Не знаю!!!!!!");
-                button3.setOnAction(e -> {
-                    Q1.setAsked(true);
-                    Q1.getAttribute().setValue(-1);
-                });
-                buttonsBox.getChildren().add(button3);
-
-            } else if (Q1.getAttribute().getValueType() == Attribute.ValueType.STRING) {
-
-                for (Object i : Q1.getAttribute().getVariantAnswers()) {
+                for (Object i : rule.getAttribute().getVariantAnswers()) {
                     String str = (String) i;
                     Button button = new Button(str);
                     button.setOnAction(e -> {
-                        Q1.setAsked(true);
-                        Q1.getAttribute().setValue(str);
+                        rule.setUsed(true);
+                        rule.getAttribute().setValue(str);
 
                     });
                     buttonsBox.getChildren().add(button);
                 }
 
-            } else if (Q1.getAttribute().getValueType() == Attribute.ValueType.NUMBER) {
+            } else if (rule.getAttribute().getValueType() == Attribute.ValueType.NUMBER) {
                 //TODO
             }
         }

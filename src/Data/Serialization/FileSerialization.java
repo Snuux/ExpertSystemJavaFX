@@ -1,6 +1,6 @@
 package Data.Serialization;
 
-import Data.Item;
+import Data.Rule;
 import javafx.scene.control.TreeItem;
 
 import java.io.*;
@@ -58,7 +58,7 @@ public class FileSerialization<T> {
                 String str = allFiles.get(i);
                 ois = new ObjectInputStream(new FileInputStream("save/" + str));
                 Node n = (Node) ois.readObject();
-                if (((Item)n.getData()).getTag().equals("ROOT"))
+                if (((Rule) n.getData()).getTag().equals("ROOT"))
                     node = n;
             }
         } catch (Exception ex) {
@@ -118,10 +118,10 @@ public class FileSerialization<T> {
             for (Object i : ((Node) t1).getChildren())
             {
                 Node str = (Node) i;
-                TreeItem<Node> treeItem = new TreeItem((Item)str.getData());
+                TreeItem<Node> treeItem = new TreeItem(str.getData());
                 ((TreeItem) t2).getChildren().add(treeItem);
                 if (!((Node) i).getChildren().isEmpty()){
-                    copyTree((Node) i, treeItem);
+                    copyTree(i, treeItem);
                 }
             }
         }
@@ -129,7 +129,7 @@ public class FileSerialization<T> {
             for (Object i : ((TreeItem) t1).getChildren())
             {
                 TreeItem str = (TreeItem) i;
-                Node<Item> node = new Node(str.getValue());
+                Node<Rule> node = new Node(str.getValue());
                 ((Node) t2).getChildren().add(node);
                 if (!((TreeItem) i).getChildren().isEmpty()){
                     copyTree(i, node);

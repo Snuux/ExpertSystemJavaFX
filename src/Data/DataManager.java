@@ -1,14 +1,13 @@
 package Data;
 
 import Data.Serialization.FileSerialization;
-import Data.Serialization.Node;
 import Data.Serialization.Tree;
 import javafx.scene.control.TreeItem;
 
 import java.util.ArrayList;
 
 public class DataManager {
-    private static TreeItem<Item> tree;
+    private static TreeItem<Rule> tree;
     private static ArrayList<Attribute> attributes;
 
     public static void test() {
@@ -19,7 +18,7 @@ public class DataManager {
     public static void saveBase() {
         Attribute<Boolean> r = new Attribute("Корень дерева", null, Attribute.Type.ROOT);
 
-        Attribute<Boolean> q1 = new Attribute("Вы хотите расслабиться при чтении книги?", null, Attribute.Type.QUESTION, Attribute.ValueType.TRUE_FALSE);
+        Attribute<Integer> q1 = new Attribute("Вы хотите расслабиться при чтении книги?", null, Attribute.Type.QUESTION, Attribute.ValueType.TRUE_FALSE);
         Attribute<Integer> q2 = new Attribute("В книге должен быть динамичный сюжет?", null, Attribute.Type.QUESTION, Attribute.ValueType.TRUE_FALSE_DONT_KNOW);
         Attribute<Integer> q3 = new Attribute("Вам больше нравится оригинальный авторский слог?", null, Attribute.Type.QUESTION, Attribute.ValueType.TRUE_FALSE_DONT_KNOW);
         Attribute<Integer> q4 = new Attribute("В данный момент вы учите иностранный язык?", null, Attribute.Type.QUESTION, Attribute.ValueType.TRUE_FALSE_DONT_KNOW);
@@ -42,32 +41,32 @@ public class DataManager {
         attributes.add(a2);
         attributes.add(o);
 
-        TreeItem<Item> R = new TreeItem (new Item("ROOT", r, null));
+        TreeItem<Rule> R = new TreeItem(new Rule("ROOT", r, null));
         tree = R;
         //tree.getChildren().add(R);
 
-        addRule(R, null, new Item("O1", o, "Властелин колец"));
-        addRule(R, null, new Item("O2", o, "Фауст"));
-        TreeItem<Item> O1 = addRule(getNodeFromNodeWithTag(R, "O1"), Item.Operation.OR, new Item("A1", a1, "Художественная"), new Item("A2", a2, "Другой"));
-        TreeItem<Item> A1 = addRule(getNodeFromNodeWithTag(O1, "A1"), Item.Operation.AND, new Item("Q1", q1, true), new Item("Q2", q2, true));
-        TreeItem<Item> A2 = addRule(getNodeFromNodeWithTag(O1, "A2"), Item.Operation.AND, new Item("Q3", q3, true), new Item("Q4", q4, true));
+        addRule(R, null, new Rule("O1", o, "Властелин колец"));
+        addRule(R, null, new Rule("O2", o, "Фауст"));
+        TreeItem<Rule> O1 = addRule(getNodeFromNodeWithTag(R, "O1"), Rule.Operation.AND, new Rule("A1", a1, "Художественная"), new Rule("A2", a2, "Другой"));
+        TreeItem<Rule> A1 = addRule(getNodeFromNodeWithTag(O1, "A1"), Rule.Operation.AND, new Rule("Q1", q1, 1), new Rule("Q2", q2, 1));
+        TreeItem<Rule> A2 = addRule(getNodeFromNodeWithTag(O1, "A2"), Rule.Operation.AND, new Rule("Q3", q3, 1), new Rule("Q4", q4, 1));
 
-        TreeItem<Item> O2 = addRule(getNodeFromNodeWithTag(R, "O2"), Item.Operation.AND, new Item("A1", a1, "Философский"), new Item("A2", a2, "Другой"), new Item("A3", a3, "Подарочный"));
-        TreeItem<Item> A3 = addRule(getNodeFromNodeWithTag(O2, "A3"), Item.Operation.AND, new Item("Q5", q5, true), new Item("Q6", q6, true));
+        TreeItem<Rule> O2 = addRule(getNodeFromNodeWithTag(R, "O2"), Rule.Operation.AND, new Rule("A1", a1, "Философский"), new Rule("A2", a2, "Другой"), new Rule("A3", a3, "Подарочный"));
+        TreeItem<Rule> A3 = addRule(getNodeFromNodeWithTag(O2, "A3"), Rule.Operation.AND, new Rule("Q5", q5, 1), new Rule("Q6", q6, 1));
 
-        TreeItem<Item> A11 = addRule(getNodeFromNodeWithTag(O2, "A1"), Item.Operation.AND, new Item("Q1", q1, true), new Item("Q2", q2, true), new Item("Q3", q3, true));
-        TreeItem<Item> A22 = addRule(getNodeFromNodeWithTag(O2, "A2"), Item.Operation.AND, new Item("Q3", q3, true), new Item("Q4", q4, true));
+        TreeItem<Rule> A11 = addRule(getNodeFromNodeWithTag(O2, "A1"), Rule.Operation.AND, new Rule("Q1", q1, 1), new Rule("Q2", q2, 1), new Rule("Q3", q3, true));
+        TreeItem<Rule> A22 = addRule(getNodeFromNodeWithTag(O2, "A2"), Rule.Operation.AND, new Rule("Q3", q3, 1), new Rule("Q4", q4, 1));
 
-        System.out.println(getQuestionsCountInTreeItem(O1));
-        System.out.println(getQuestionsCountInTreeItem(O2));
+        //System.out.println(getQuestionsCountInTreeItem(O1));
+        //System.out.println(getQuestionsCountInTreeItem(O2));
 
-        System.out.println(getQuestion(R.getChildren().get(0).getChildren().get(0).getChildren().get(0)).getValue());
+        //System.out.println(getQuestion(R.getChildren().get(0).getChildren().get(0).getChildren().get(0)).getValue());
 
         FileSerialization.<ArrayList>serialize(attributes, "save/Attributes");
 
-        Tree treeSer = new Tree(new Node(new Item("ROOT", r, null)));
-        FileSerialization.copyTree(R, treeSer.getRoot());
-        FileSerialization.treeSerialize(treeSer.getRoot(), "save/TreeSer");
+        //Tree treeSer = new Tree(new Node(new Rule("ROOT", r, null)));
+        //FileSerialization.copyTree(R, treeSer.getRoot());
+        //FileSerialization.treeSerialize(treeSer.getRoot(), "save/TreeSer");
 
 
     }
@@ -84,7 +83,7 @@ public class DataManager {
                 r = a;
             }
         }
-        tree = new TreeItem(new Item("ROOT", r, null));
+        tree = new TreeItem(new Rule("ROOT", r, null));
 
         FileSerialization.copyTree(treeDeser.getRoot(), tree);
     }
@@ -94,12 +93,12 @@ public class DataManager {
      *
      * @return result node.
      */
-    private static TreeItem addRule(TreeItem result, Item.Operation operation, Item ... atr) {
-        ((Item) result.getValue()).setOperation(operation);
+    private static TreeItem addRule(TreeItem result, Rule.Operation operation, Rule... atr) {
+        ((Rule) result.getValue()).setOperation(operation);
 
         //Adding attributes into result node. Ex: A1 -> Q1 && Q2 && Q3
         //Node resultNode = new Node(result);
-        for (Item i : atr)
+        for (Rule i : atr)
             result.getChildren().add(new TreeItem(i));
 
         return result;
@@ -113,7 +112,7 @@ public class DataManager {
     private static TreeItem getNodeFromNodeWithTag(TreeItem source, String tag) {
         for (Object i : source.getChildren())
         {
-            String itemTag = ((Item) ((TreeItem) i).getValue()).getTag();
+            String itemTag = ((Rule) ((TreeItem) i).getValue()).getTag();
             if (itemTag.equals(tag)) {
                 return (TreeItem) i;
             }
@@ -122,7 +121,7 @@ public class DataManager {
         return null;
     }
 
-    public static TreeItem<Item> getTree() {
+    public static TreeItem<Rule> getTree() {
         return tree;
     }
 
@@ -130,58 +129,144 @@ public class DataManager {
         return attributes;
     }
 
-    public static TreeItem getQuestion(TreeItem sourceNode) {
-        Item sourceItem = (Item) sourceNode.getValue();
+    public static TreeItem getQuestion(TreeItem node) {
+        Rule sourceRule = (Rule) node.getValue();
 
-        /*if (!sourceItem.isAsked()) { //Если source правило ещё не приминили
-            for (Object i : sourceNode.getChildren()) {
+        //Tree example:
+        //          A
+        //         / \
+        //        B   C
+        //          / | \
+        //         D  E  I
+        //           / \
+        //          H   F
+        //
+
+
+        if (sourceRule.getOperation() == Rule.Operation.AND && checkEvenOneChildrenUsed(node) && !sourceRule.isUsed()) {// && !node.getChildren().isEmpty()) {
+            //Not all answers exits (if even one not correct)
+            for (Object i : node.getChildren()) {
                 TreeItem ti = (TreeItem) i;
-                Item item = (Item) ti.getValue();
+                Rule irule = (Rule) ti.getValue();
 
-                getQuestion(ti);
-
-                if (!item.isAsked()) { //Если правило-сын ещё не приминили
-                    if (item.getAttribute().getType() == Attribute.Type.QUESTION) {
-                        item.setAsked(true);
-                        return ti;
+                //if one of children is false -> all rules is false
+                if (irule.getAttribute().getValue() != null) {
+                    if (!irule.getValue().equals(irule.getAttribute().getValue())) {
+                        sourceRule.setUsed(true);
+                        sourceRule.getAttribute().setValue(null);
+                        return getQuestion(node.getParent());
                     }
-                    else {
-                        getQuestion(ti);
-                        return ti;
-                    }
-                    //getQuestion(ti);
-                    //return null;
-                } else { //Если правило-сын ещё не приминили
-
                 }
             }
 
-        } else {
-            //Если source правило применили
+            //if all answers exists and previous code not set value
+            if (checkAllChildrenUsed(node) && !sourceRule.isUsed()) {
+                sourceRule.setUsed(true);
+                sourceRule.getAttribute().setValue(sourceRule.getValue());
+                return getQuestion(node.getParent());
+            }
+
+        }/*
+        else if (sourceRule.getOperation() == Rule.Operation.OR && checkEvenOneChildrenUsed(node) && !sourceRule.isUsed()) {
+            if (checkAllChildrenUsed(node)) {
+                Rule rule = (Rule) node.getValue();
+
+                //TODO
+
+                rule.setUsed(true);
+                return getQuestion(node.getParent());
+            }
         }*/
 
-        return sourceNode;
+        //If H && F is used then process E rule
+        if (sourceRule.getAttribute().getType() == Attribute.Type.QUESTION && !sourceRule.isUsed()) { //Если узел Q
+            return node;
+        } else if (sourceRule.getAttribute().getType() == Attribute.Type.ATTRIBUTE ||
+                sourceRule.getAttribute().getType() == Attribute.Type.OBJECT ||
+                sourceRule.getAttribute().getType() == Attribute.Type.TEMPORARY) { //Если узел A || O || T
+
+            for (Object i : node.getChildren()) {
+                TreeItem ti = (TreeItem) i;
+                Rule rule = (Rule) ti.getValue();
+
+                if (!rule.isUsed())
+                    return getQuestion(ti);
+            }
+        }
+
+        return null;
+    }
+
+    private static boolean checkEvenOneChildrenUsed(TreeItem node) {
+        boolean flag = false;
+
+        for (Object i : node.getChildren()) {
+            TreeItem ti = (TreeItem) i;
+            Rule rule = (Rule) ti.getValue();
+
+            if (rule.isUsed()) {
+                flag = true;
+                return flag;
+            }
+        }
+
+        return flag;
+    }
+
+    private static boolean checkAllChildrenUsed(TreeItem node) {
+        boolean flag = true;
+
+        for (Object i : node.getChildren()) {
+            TreeItem ti = (TreeItem) i;
+            Rule rule = (Rule) ti.getValue();
+
+            if (!rule.isUsed()) {
+                flag = false;
+                return flag;
+            }
+        }
+
+        return flag;
+    }
+
+    public static TreeItem getPreferObject(TreeItem root) {
+        int min = Integer.MAX_VALUE;
+        TreeItem minTree = null;
+
+        for (Object i : root.getChildren()) {
+            TreeItem ti = (TreeItem) i;
+
+            int cur = getQuestionsCountInTreeItem(ti);
+
+            if (min > cur) {
+                min = cur;
+                minTree = ti;
+            }
+        }
+
+        return minTree;
     }
 
     static int tmpCount = 0;
-    public static int getQuestionsCountInTreeItem(TreeItem sourceNode) {
+
+    private static int getQuestionsCountInTreeItem(TreeItem node) {
         tmpCount = 0;
 
-        getQuestionsCountInTreeItemRec(sourceNode);
+        getQuestionsCountInTreeItemRec(node);
 
         return tmpCount;
     }
 
-    private static void getQuestionsCountInTreeItemRec(TreeItem sourceNode) {
-        for (Object i : sourceNode.getChildren()) {
+    private static void getQuestionsCountInTreeItemRec(TreeItem node) {
+        for (Object i : node.getChildren()) {
             TreeItem ti = (TreeItem) i;
-            Item item = (Item) ti.getValue();
+            Rule rule = (Rule) ti.getValue();
 
-            if (item.getAttribute().getType() == Attribute.Type.QUESTION &&  //Если тип == вопрос
-                item.getAttribute().getValue() == null)
+            if (rule.getAttribute().getType() == Attribute.Type.QUESTION &&  //Если тип == вопрос
+                    rule.getAttribute().getValue() == null)
                 tmpCount++;
 
-            if (!ti.getChildren().isEmpty() && !item.getAttribute().hasValue()) {
+            if (!ti.getChildren().isEmpty() && !rule.getAttribute().hasValue()) {
                 getQuestionsCountInTreeItemRec(ti);
             }
         }

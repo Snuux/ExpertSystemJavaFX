@@ -2,22 +2,25 @@ package Data;
 
 import java.io.Serializable;
 
-public class Item<T> implements Serializable{
+import static Data.Rule.Operation.NO_OP;
+
+public class Rule<T> implements Serializable {
     private Attribute attribute; //*указатель
     private T value;
     private int id;
     private static int count = 0;
     private String tag;
     private Operation operation;
-    private boolean asked;
+    private boolean used;
 
-    public Item(String tag, Attribute attribute, T value) {
+    public Rule(String tag, Attribute attribute, T value) {
         this.id = count++;
 
         this.tag = tag;
         this.attribute = attribute;
         this.value = value;
-        this.asked = false;
+        this.used = false;
+        this.operation = NO_OP;
     }
 
     public Attribute getAttribute() {
@@ -36,12 +39,12 @@ public class Item<T> implements Serializable{
         return tag;
     }
 
-    public boolean isAsked() {
-        return asked;
+    public boolean isUsed() {
+        return used;
     }
 
-    public void setAsked(boolean asked) {
-        this.asked = asked;
+    public void setUsed(boolean used) {
+        this.used = used;
     }
 
     public void setOperation(Operation operation) {
@@ -53,7 +56,7 @@ public class Item<T> implements Serializable{
         if (!obj.getClass().equals(this))
             return false;
 
-        return ((Item) obj).id == id;
+        return ((Rule) obj).id == id;
     }
 
     public enum Operation {

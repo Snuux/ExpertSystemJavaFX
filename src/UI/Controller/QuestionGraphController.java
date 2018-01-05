@@ -2,7 +2,7 @@ package UI.Controller;
 
 import Data.Attribute;
 import Data.DataManager;
-import Data.Item;
+import Data.Rule;
 import UI.UIUtilities;
 import javafx.application.Platform;
 import javafx.beans.property.ListProperty;
@@ -73,7 +73,7 @@ public class QuestionGraphController implements Initializable {
         MenuItem entry3 = new MenuItem("Удалить правило");
 
         entry1.setOnAction(ae -> {
-            //System.out.println(((Item)getTreeViewSelection().getValue()).getTag());
+            //System.out.println(((Rule)getTreeViewSelection().getValue()).getTag());
         });
 
         treeView.setContextMenu(new ContextMenu(entry1, entry2, entry3));
@@ -90,7 +90,7 @@ public class QuestionGraphController implements Initializable {
 
         if (!currentTreeItemSelection.equals(selectedItem)) {
             currentTreeItemSelection = selectedItem;
-            Item it = (Item)selectedItem.getValue();
+            Rule it = (Rule) selectedItem.getValue();
 
             tagField.setText(it.getTag());
             attributeComboBox.setValue(it.getAttribute().getText());
