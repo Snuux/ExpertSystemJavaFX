@@ -54,7 +54,7 @@ public class DataManager {
         TreeItem<Rule> O2 = addRule(getNodeFromNodeWithTag(R, "O2"), Rule.Operation.AND, new Rule("A1", a1, "Философский"), new Rule("A2", a2, "Другой"), new Rule("A3", a3, "Подарочный"));
         TreeItem<Rule> A3 = addRule(getNodeFromNodeWithTag(O2, "A3"), Rule.Operation.AND, new Rule("Q5", q5, 1), new Rule("Q6", q6, 1));
 
-        TreeItem<Rule> A11 = addRule(getNodeFromNodeWithTag(O2, "A1"), Rule.Operation.AND, new Rule("Q1", q1, 1), new Rule("Q2", q2, 1), new Rule("Q3", q3, true));
+        TreeItem<Rule> A11 = addRule(getNodeFromNodeWithTag(O2, "A1"), Rule.Operation.AND, new Rule("Q1", q1, 1), new Rule("Q2", q2, 1), new Rule("Q3", q3, 1));
         TreeItem<Rule> A22 = addRule(getNodeFromNodeWithTag(O2, "A2"), Rule.Operation.AND, new Rule("Q3", q3, 1), new Rule("Q4", q4, 1));
 
         //System.out.println(getQuestionsCountInTreeItem(O1));
@@ -142,59 +142,61 @@ public class DataManager {
         //          H   F
         //
 
-
-        if (sourceRule.getOperation() == Rule.Operation.AND && checkEvenOneChildrenUsed(node) && !sourceRule.isUsed()) {// && !node.getChildren().isEmpty()) {
-            //Not all answers exits (if even one not correct)
-            for (Object i : node.getChildren()) {
-                TreeItem ti = (TreeItem) i;
-                Rule irule = (Rule) ti.getValue();
-
-                //if one of children is false -> all rules is false
-                if (irule.getAttribute().getValue() != null) {
-                    if (!irule.getValue().equals(irule.getAttribute().getValue())) {
-                        sourceRule.setUsed(true);
-                        sourceRule.getAttribute().setValue(null);
-                        return getQuestion(node.getParent());
-                    }
-                }
-            }
-
-            //if all answers exists and previous code not set value
-            if (checkAllChildrenUsed(node) && !sourceRule.isUsed()) {
-                sourceRule.setUsed(true);
-                sourceRule.getAttribute().setValue(sourceRule.getValue());
-                return getQuestion(node.getParent());
-            }
-
-        }/*
-        else if (sourceRule.getOperation() == Rule.Operation.OR && checkEvenOneChildrenUsed(node) && !sourceRule.isUsed()) {
-            if (checkAllChildrenUsed(node)) {
-                Rule rule = (Rule) node.getValue();
-
-                //TODO
-
-                rule.setUsed(true);
-                return getQuestion(node.getParent());
-            }
-        }*/
+        int count = 0;
+        while (count++ < 4)
+            processAllRules(node);
 
         //If H && F is used then process E rule
-        if (sourceRule.getAttribute().getType() == Attribute.Type.QUESTION && !sourceRule.isUsed()) { //Если узел Q
+        if (sourceRule.getAttribute().getType() == Attribute.Type.QUESTION) {// && sourceRule.getAttribute().isExist() != Attribute.IsExist.EXIST) { //Если узел Q
             return node;
         } else if (sourceRule.getAttribute().getType() == Attribute.Type.ATTRIBUTE ||
-                sourceRule.getAttribute().getType() == Attribute.Type.OBJECT ||
-                sourceRule.getAttribute().getType() == Attribute.Type.TEMPORARY) { //Если узел A || O || T
+                sourceRule.getAttribute().getType() == Attribute.Type.TEMPORARY ||
+                sourceRule.getAttribute().getType() == Attribute.Type.OBJECT) { //Если узел A || O || T
 
             for (Object i : node.getChildren()) {
                 TreeItem ti = (TreeItem) i;
                 Rule rule = (Rule) ti.getValue();
 
-                if (!rule.isUsed())
+                if (!rule.isUsed() && sourceRule.getAttribute().isExist() != Attribute.IsExist.EXIST)
                     return getQuestion(ti);
             }
         }
 
+        if (sourceRule.getAttribute().getType() == Attribute.Type.OBJECT && sourceRule.isUsed()) {
+            return node;
+        }
+
         return null;
+    }
+
+    private static void processAllRules(TreeItem node) {
+        Rule rule = (Rule) node.getValue();
+
+        if (rule.getOperation() == Rule.Operation.AND && checkEvenOneChildrenUsed(node) && !rule.isUsed()) {
+            for (Object i : node.getChildren()) {
+                TreeItem ti = (TreeItem) i;
+                Rule irule = (Rule) ti.getValue();
+
+                //if one of children is false -> all rules is false
+                if (irule.getAttribute().isExist() == Attribute.IsExist.EXIST) {
+                    if (!irule.getValue().equals(irule.getAttribute().getValue())) {
+                        rule.setUsed(true);
+                        rule.getAttribute().setValue(null);
+                    }
+                }
+            }
+
+            if (checkAllChildrenUsed(node) && !rule.isUsed()) {
+                rule.setUsed(true);
+                rule.getAttribute().setValue(rule.getValue());
+            }
+        }
+
+        for (Object i : node.getChildren()) {
+            TreeItem ti = (TreeItem) i;
+
+            processAllRules(ti);
+        }
     }
 
     private static boolean checkEvenOneChildrenUsed(TreeItem node) {
@@ -235,10 +237,11 @@ public class DataManager {
 
         for (Object i : root.getChildren()) {
             TreeItem ti = (TreeItem) i;
+            Rule rule = (Rule) ti.getValue();
 
             int cur = getQuestionsCountInTreeItem(ti);
 
-            if (min > cur) {
+            if (min > cur && rule.getAttribute().isExist() != Attribute.IsExist.EXIST) {
                 min = cur;
                 minTree = ti;
             }
@@ -266,7 +269,7 @@ public class DataManager {
                     rule.getAttribute().getValue() == null)
                 tmpCount++;
 
-            if (!ti.getChildren().isEmpty() && !rule.getAttribute().hasValue()) {
+            if (!ti.getChildren().isEmpty() && rule.getAttribute().isExist() != Attribute.IsExist.EXIST) {
                 getQuestionsCountInTreeItemRec(ti);
             }
         }

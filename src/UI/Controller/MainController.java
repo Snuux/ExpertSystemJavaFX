@@ -54,6 +54,9 @@ public class MainController implements Initializable {
 
     private void processNextQuestion() {
         //magic begins
+        int kk = 0;
+        if (currentNode == null)
+            kk = 1;
 
         Rule currentRule = (Rule) DataManager.getQuestion(currentNode).getValue();
 

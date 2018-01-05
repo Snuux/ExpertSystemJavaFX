@@ -68,7 +68,10 @@ public class Rule<T> implements Serializable {
 
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(tag).append(" ").append(attribute.getText()).append(" == ").append(value);
+        stringBuilder.append(attribute.getText()).append(", ");
+        stringBuilder.append("ruleIsUsed: ").append(isUsed()).append(", ");
+        stringBuilder.append("atrHasValue: ").append(getAttribute().isExist()).append(", ");
+        stringBuilder.append(tag).append(" == ").append(value);
 
         if (operation != null)
             switch (operation) {
