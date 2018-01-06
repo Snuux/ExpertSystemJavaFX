@@ -92,6 +92,87 @@ public class DataManager {
         addRule(R, null, new Rule("O3", o, "Тихий Дон"));
         addRule(R, null, new Rule("O4", o, "Евгений Онегин"));
         addRule(R, null, new Rule("O5", o, "Искусство войны"));
+
+        //addRule(R, null, new Rule("O6", o, "Фауст"));
+        //addRule(R, null, new Rule("O7", o, "Как доводить дела до цонца"));
+        //addRule(R, null, new Rule("O8", o, "Как завоевывть друзей"));
+        //addRule(R, null, new Rule("O9", o, "Донцова"));
+        //addRule(R, null, new Rule("O10", o, "Сумерки"));
+        //addRule(R, null, new Rule("O11", o, "Чистый код"));
+        //addRule(R, null, new Rule("O12", o, "Лекции по высшей математике"));
+
+        TreeItem<Rule> O1 = addRule(getNodeFromNodeWithTag(R, "O1"), Rule.Operation.AND,
+                new Rule<>("A1", a1, "Художественная"),
+                new Rule<>("A2", a2, "Другой"),
+                new Rule<>("A3", a3, "Подарочная"),
+                new Rule<>("A4", a4, "Есть"),
+                new Rule<>("A5", a5, "Классическая"));
+
+        addRule(getNodeFromNodeWithTag(O1, "A1"), Rule.Operation.AND, new Rule<>("Q11", q11, 1), new Rule<>("Q12", q12, 1));
+        addRule(getNodeFromNodeWithTag(O1, "A2"), Rule.Operation.AND, new Rule<>("Q61", q61, 1), new Rule<>("Q62", q62, 1));
+        addRule(getNodeFromNodeWithTag(O1, "A3"), Rule.Operation.AND, new Rule<>("Q81", q81, 1), new Rule<>("Q82", q82, 1));
+        addRule(getNodeFromNodeWithTag(O1, "A4"), Rule.Operation.AND, new Rule<>("Q91", q91, 1), new Rule<>("Q92", q92, 1));
+        addRule(getNodeFromNodeWithTag(O1, "A5"), Rule.Operation.AND, new Rule<>("Q121", q121, 1), new Rule<>("Q122", q122, 1));
+
+        TreeItem<Rule> O2 = addRule(getNodeFromNodeWithTag(R, "O2"), Rule.Operation.AND,
+                new Rule<>("A1", a1, "Художественная"),
+                new Rule<>("A2", a2, "Другой"),
+                new Rule<>("A3", a3, "Подарочная"),
+                new Rule<>("A4", a4, "Есть"),
+                new Rule<>("A5", a5, "Современная"));
+
+        addRule(getNodeFromNodeWithTag(O2, "A1"), Rule.Operation.AND, new Rule<>("Q11", q11, 1), new Rule<>("Q12", q12, 1));
+        addRule(getNodeFromNodeWithTag(O2, "A2"), Rule.Operation.AND, new Rule<>("Q61", q61, 1), new Rule<>("Q62", q62, 1));
+        addRule(getNodeFromNodeWithTag(O2, "A3"), Rule.Operation.AND, new Rule<>("Q81", q81, 1), new Rule<>("Q82", q82, 1));
+        addRule(getNodeFromNodeWithTag(O2, "A4"), Rule.Operation.AND, new Rule<>("Q91", q91, 1), new Rule<>("Q92", q92, 1));
+        addRule(getNodeFromNodeWithTag(O2, "A5"), Rule.Operation.AND, new Rule<>("Q111", q121, 1), new Rule<>("Q112", q122, 1));
+
+        TreeItem<Rule> O3 = addRule(getNodeFromNodeWithTag(R, "O3"), Rule.Operation.AND,
+                new Rule<>("A1", a1, "Художественная"),
+                new Rule<>("A2", a2, "Русский"),
+                new Rule<>("A3", a3, "Обычная"),
+                new Rule<>("A4", a4, "Нет"),
+                new Rule<>("A5", a5, "Классическая"));
+
+        addRule(getNodeFromNodeWithTag(O3, "A1"), Rule.Operation.AND, new Rule<>("Q11", q11, 1), new Rule<>("Q12", q12, 1));
+        addRule(getNodeFromNodeWithTag(O3, "A2"), Rule.Operation.AND, new Rule<>("Q51", q51, 1), new Rule<>("Q52", q52, 1));
+        addRule(getNodeFromNodeWithTag(O3, "A3"), Rule.Operation.AND, new Rule<>("Q71", q71, 1), new Rule<>("Q72", q72, 1));
+        addRule(getNodeFromNodeWithTag(O3, "A4"), Rule.Operation.AND, new Rule<>("Q101", q101, 1), new Rule<>("Q102", q102, 1));
+        addRule(getNodeFromNodeWithTag(O3, "A5"), Rule.Operation.AND, new Rule<>("Q121", q121, 1), new Rule<>("Q122", q122, 1));
+
+        TreeItem<Rule> O4 = addRule(getNodeFromNodeWithTag(R, "O4"), Rule.Operation.AND,
+                new Rule<>("A1", a1, "Художественная"),
+                new Rule<>("A2", a2, "Русский"),
+                new Rule<>("A3", a3, "Обычная"),
+                new Rule<>("A4", a4, "Нет"),
+                new Rule<>("A5", a5, "Классическая"));
+
+        addRule(getNodeFromNodeWithTag(O4, "A1"), Rule.Operation.AND, new Rule<>("Q11", q11, 1), new Rule<>("Q12", q12, 1));
+        addRule(getNodeFromNodeWithTag(O4, "A2"), Rule.Operation.AND, new Rule<>("Q51", q51, 1), new Rule<>("Q52", q52, 1));
+        addRule(getNodeFromNodeWithTag(O4, "A3"), Rule.Operation.AND, new Rule<>("Q71", q71, 1), new Rule<>("Q72", q72, 1));
+        addRule(getNodeFromNodeWithTag(O4, "A4"), Rule.Operation.AND, new Rule<>("Q101", q101, 1), new Rule<>("Q102", q102, 1));
+        addRule(getNodeFromNodeWithTag(O4, "A5"), Rule.Operation.AND, new Rule<>("Q121", q121, 1), new Rule<>("Q122", q122, 1));
+
+        TreeItem<Rule> O5 = addRule(getNodeFromNodeWithTag(R, "O5"), Rule.Operation.AND,
+                new Rule<>("A1", a1, "Философская"),
+                new Rule<>("A2", a2, "Другой"),
+                new Rule<>("A3", a3, "Подарочная"),
+                new Rule<>("A4", a4, "Нет"),
+                new Rule<>("A5", a5, "Классическая"));
+
+        addRule(getNodeFromNodeWithTag(O5, "A1"), Rule.Operation.AND, new Rule<>("Q21", q21, 1), new Rule<>("Q22", q22, 1));
+        addRule(getNodeFromNodeWithTag(O5, "A2"), Rule.Operation.AND, new Rule<>("Q61", q61, 1), new Rule<>("Q62", q62, 1));
+        addRule(getNodeFromNodeWithTag(O5, "A3"), Rule.Operation.AND, new Rule<>("Q81", q81, 1), new Rule<>("Q82", q82, 1));
+        addRule(getNodeFromNodeWithTag(O5, "A4"), Rule.Operation.AND, new Rule<>("Q101", q101, 1), new Rule<>("Q102", q102, 1));
+        addRule(getNodeFromNodeWithTag(O5, "A5"), Rule.Operation.AND, new Rule<>("Q121", q121, 1), new Rule<>("Q122", q122, 1));
+
+        /*
+        addRule(R, null, new Rule("O1", o, "Властелин колец	"));
+        addRule(R, null, new Rule("O2", o, "Гарри Поттер"));
+        addRule(R, null, new Rule("O3", o, "Тихий Дон"));
+        addRule(R, null, new Rule("O4", o, "Евгений Онегин"));
+        addRule(R, null, new Rule("O5", o, "Искусство войны"));
+
         //addRule(R, null, new Rule("O6", o, "Фауст"));
         //addRule(R, null, new Rule("O7", o, "Как доводить дела до цонца"));
         //addRule(R, null, new Rule("O8", o, "Как завоевывть друзей"));
@@ -116,7 +197,7 @@ public class DataManager {
         addRule(getNodeFromNodeWithTag(O1, "A3"), Rule.Operation.AND, new Rule<>("Q81", q81, 1), new Rule<>("Q82", q82, 1));
         addRule(getNodeFromNodeWithTag(O1, "A4"), Rule.Operation.AND, new Rule<>("Q91", q91, 1), new Rule<>("Q92", q92, 1));
         addRule(getNodeFromNodeWithTag(O1, "A5"), Rule.Operation.AND, new Rule<>("Q121", q121, 1), new Rule<>("Q122", q122, 1));
-        addRule(getNodeFromNodeWithTag(O1, "A6"), Rule.Operation.AND, new Rule<>("Q141", q141, 1), new Rule<>("Q142", q142, 1));
+        addRule(getNodeFromNodeWithTag(O1, "A6"), Rule.Operation.AND, new Rule<>("Q141", q141, 0), new Rule<>("Q142", q142, 0));
         addRule(getNodeFromNodeWithTag(O1, "A7"), Rule.Operation.AND, new Rule<>("Q151", q151, 1), new Rule<>("Q152", q152, 1));
         addRule(getNodeFromNodeWithTag(O1, "A8"), Rule.Operation.AND, new Rule<>("Q171", q171, 1), new Rule<>("Q172", q172, 1));
         addRule(getNodeFromNodeWithTag(O1, "A9"), Rule.Operation.AND, new Rule<>("Q201", q201, 1), new Rule<>("Q202", q202, 1));
@@ -137,7 +218,7 @@ public class DataManager {
         addRule(getNodeFromNodeWithTag(O2, "A3"), Rule.Operation.AND, new Rule<>("Q81", q81, 1), new Rule<>("Q82", q82, 1));
         addRule(getNodeFromNodeWithTag(O2, "A4"), Rule.Operation.AND, new Rule<>("Q91", q91, 1), new Rule<>("Q92", q92, 1));
         addRule(getNodeFromNodeWithTag(O2, "A5"), Rule.Operation.AND, new Rule<>("Q111", q121, 1), new Rule<>("Q112", q122, 1));
-        addRule(getNodeFromNodeWithTag(O2, "A6"), Rule.Operation.AND, new Rule<>("Q141", q141, 1), new Rule<>("Q142", q142, 1));
+        addRule(getNodeFromNodeWithTag(O2, "A6"), Rule.Operation.AND, new Rule<>("Q141", q141, 0), new Rule<>("Q142", q142, 0));
         addRule(getNodeFromNodeWithTag(O2, "A7"), Rule.Operation.AND, new Rule<>("Q151", q151, 1), new Rule<>("Q152", q152, 1));
         addRule(getNodeFromNodeWithTag(O2, "A8"), Rule.Operation.AND, new Rule<>("Q181", q171, 1), new Rule<>("Q182", q172, 1));
         addRule(getNodeFromNodeWithTag(O2, "A9"), Rule.Operation.AND, new Rule<>("Q201", q201, 1), new Rule<>("Q202", q202, 1));
@@ -158,7 +239,7 @@ public class DataManager {
         addRule(getNodeFromNodeWithTag(O3, "A3"), Rule.Operation.AND, new Rule<>("Q71", q71, 1), new Rule<>("Q72", q72, 1));
         addRule(getNodeFromNodeWithTag(O3, "A4"), Rule.Operation.AND, new Rule<>("Q101", q101, 1), new Rule<>("Q102", q102, 1));
         addRule(getNodeFromNodeWithTag(O3, "A5"), Rule.Operation.AND, new Rule<>("Q121", q121, 1), new Rule<>("Q122", q122, 1));
-        addRule(getNodeFromNodeWithTag(O3, "A6"), Rule.Operation.AND, new Rule<>("Q141", q141, 1), new Rule<>("Q142", q142, 1));
+        addRule(getNodeFromNodeWithTag(O3, "A6"), Rule.Operation.AND, new Rule<>("Q141", q141, 0), new Rule<>("Q142", q142, 0));
         addRule(getNodeFromNodeWithTag(O3, "A7"), Rule.Operation.AND, new Rule<>("Q161", q161, 1), new Rule<>("Q162", q162, 1));
         addRule(getNodeFromNodeWithTag(O3, "A8"), Rule.Operation.AND, new Rule<>("Q191", q191, 1), new Rule<>("Q192", q192, 1));
         addRule(getNodeFromNodeWithTag(O3, "A9"), Rule.Operation.AND, new Rule<>("Q201", q201, 1), new Rule<>("Q202", q202, 1));
@@ -179,7 +260,7 @@ public class DataManager {
         addRule(getNodeFromNodeWithTag(O4, "A3"), Rule.Operation.AND, new Rule<>("Q71", q71, 1), new Rule<>("Q72", q72, 1));
         addRule(getNodeFromNodeWithTag(O4, "A4"), Rule.Operation.AND, new Rule<>("Q101", q101, 1), new Rule<>("Q102", q102, 1));
         addRule(getNodeFromNodeWithTag(O4, "A5"), Rule.Operation.AND, new Rule<>("Q121", q121, 1), new Rule<>("Q122", q122, 1));
-        addRule(getNodeFromNodeWithTag(O4, "A6"), Rule.Operation.AND, new Rule<>("Q131", q131, 1), new Rule<>("Q132", q132, 1));
+        addRule(getNodeFromNodeWithTag(O4, "A6"), Rule.Operation.AND, new Rule<>("Q131", q131, 0), new Rule<>("Q132", q132, 0));
         addRule(getNodeFromNodeWithTag(O4, "A7"), Rule.Operation.AND, new Rule<>("Q161", q161, 1), new Rule<>("Q162", q162, 1));
         addRule(getNodeFromNodeWithTag(O4, "A8"), Rule.Operation.AND, new Rule<>("Q191", q191, 1), new Rule<>("Q192", q192, 1));
         addRule(getNodeFromNodeWithTag(O4, "A9"), Rule.Operation.AND, new Rule<>("Q211", q211, 1), new Rule<>("Q212", q212, 1));
@@ -200,10 +281,39 @@ public class DataManager {
         addRule(getNodeFromNodeWithTag(O5, "A3"), Rule.Operation.AND, new Rule<>("Q81", q81, 1), new Rule<>("Q82", q82, 1));
         addRule(getNodeFromNodeWithTag(O5, "A4"), Rule.Operation.AND, new Rule<>("Q101", q101, 1), new Rule<>("Q102", q102, 1));
         addRule(getNodeFromNodeWithTag(O5, "A5"), Rule.Operation.AND, new Rule<>("Q121", q121, 1), new Rule<>("Q122", q122, 1));
-        addRule(getNodeFromNodeWithTag(O5, "A6"), Rule.Operation.AND, new Rule<>("Q131", q131, 1), new Rule<>("Q132", q132, 1));
+        addRule(getNodeFromNodeWithTag(O5, "A6"), Rule.Operation.AND, new Rule<>("Q131", q131, 0), new Rule<>("Q132", q132, 0));
         addRule(getNodeFromNodeWithTag(O5, "A7"), Rule.Operation.AND, new Rule<>("Q151", q151, 1), new Rule<>("Q152", q152, 1));
         addRule(getNodeFromNodeWithTag(O5, "A8"), Rule.Operation.AND, new Rule<>("Q191", q191, 1), new Rule<>("Q192", q192, 1));
-        addRule(getNodeFromNodeWithTag(O5, "A9"), Rule.Operation.AND, new Rule<>("Q201", q201, 1), new Rule<>("Q202", q202, 1));
+        addRule(getNodeFromNodeWithTag(O5, "A9"), Rule.Operation.AND, new Rule<>("Q201", q201, 1), new Rule<>("Q202", q202, 1));*/
+
+        ////
+
+        /*TreeItem<Rule> O1 = addRule(getNodeFromNodeWithTag(R, "O1"), Rule.Operation.AND,
+                new Rule<>("A1", a1, "Художественная"),
+                new Rule<>("A2", a2, "Другой"),
+                new Rule<>("A3", a3, "Подарочная"),
+                new Rule<>("A4", a4, "Есть"));
+
+        addRule(getNodeFromNodeWithTag(O1, "A1"), Rule.Operation.AND, new Rule<>("Q11", q11, 1), new Rule<>("Q12", q12, 1));
+        addRule(getNodeFromNodeWithTag(O1, "A2"), Rule.Operation.AND, new Rule<>("Q61", q61, 1), new Rule<>("Q62", q62, 1));
+        addRule(getNodeFromNodeWithTag(O1, "A3"), Rule.Operation.AND, new Rule<>("Q81", q81, 1), new Rule<>("Q82", q82, 1));
+        addRule(getNodeFromNodeWithTag(O1, "A4"), Rule.Operation.AND, new Rule<>("Q91", q91, 1), new Rule<>("Q92", q92, 1));
+
+        TreeItem<Rule> O5 = addRule(getNodeFromNodeWithTag(R, "O5"), Rule.Operation.AND,
+                new Rule<>("A1", a1, "Философская"),
+                new Rule<>("A2", a2, "Другой"),
+                new Rule<>("A3", a3, "Подарочная"),
+                new Rule<>("A4", a4, "Нет"));
+
+        addRule(getNodeFromNodeWithTag(O5, "A1"), Rule.Operation.AND, new Rule<>("Q21", q21, 1), new Rule<>("Q22", q22, 1));
+        addRule(getNodeFromNodeWithTag(O5, "A2"), Rule.Operation.AND, new Rule<>("Q61", q61, 1), new Rule<>("Q62", q62, 1));
+        addRule(getNodeFromNodeWithTag(O5, "A3"), Rule.Operation.AND, new Rule<>("Q81", q81, 1), new Rule<>("Q82", q82, 1));
+        addRule(getNodeFromNodeWithTag(O5, "A4"), Rule.Operation.AND, new Rule<>("Q101", q101, 1), new Rule<>("Q102", q102, 1));*/
+
+
+        /////
+
+
 
         /*TreeItem<Rule> O1 = addRule(getNodeFromNodeWithTag(R, "O1"), Rule.Operation.AND, new Rule("A1", a1, "Художественная"), new Rule("A2", a2, "Другой"));
         TreeItem<Rule> A1 = addRule(getNodeFromNodeWithTag(O1, "A1"), Rule.Operation.AND, new Rule("Q1", q1, 1), new Rule("Q2", q2, 1));
@@ -309,11 +419,19 @@ public class DataManager {
 
         int count = 0;
         while (count++ < 10) {
+            processAllQuestions(tree);
+        }
+        count = 0;
+        while (count++ < 10) {
             processAllRules(tree);
         }
 
+        if (sourceRule.getAttribute().getType() == Attribute.Type.OBJECT && sourceRule.isUsed()) {
+            return node;
+        }
+
         //If H && F is used then process E rule
-        if (sourceRule.getAttribute().getType() == Attribute.Type.QUESTION) {// && sourceRule.getAttribute().isExist() != Attribute.IsExist.EXIST) { //Если узел Q
+        if (sourceRule.getAttribute().getType() == Attribute.Type.QUESTION) { //Если узел Q
             return node;
         } else if (sourceRule.getAttribute().getType() == Attribute.Type.ATTRIBUTE ||
                 sourceRule.getAttribute().getType() == Attribute.Type.TEMPORARY ||
@@ -323,41 +441,81 @@ public class DataManager {
                 TreeItem ti = (TreeItem) i;
                 Rule rule = (Rule) ti.getValue();
 
-                if (!rule.isUsed() && sourceRule.getAttribute().isExist() != Attribute.IsExist.EXIST)
+                if (!rule.isUsed())// && !sourceRule.getAttribute().isEntered())
                     return getQuestion(ti);
             }
-        }
-
-        if (sourceRule.getAttribute().getType() == Attribute.Type.OBJECT && sourceRule.isUsed()) {
-            return node;
         }
 
         return null;
     }
 
+    private static void processAllQuestions(TreeItem node) {
+        Rule rule = (Rule) node.getValue();
+
+        if (rule.getAttribute().getType() == Attribute.Type.QUESTION) {
+
+            //Check if even any question true
+            if (rule.getValue().equals(rule.getAttribute().getValue())) {
+                rule.getAttribute().setTrue(true);
+                rule.setUsed(true);
+            } else {
+
+                //If question is entered and not true
+                if (rule.getAttribute().isEntered()) {
+                    rule.setUsed(true);
+                }
+            }
+            //else {
+            //    rule.getAttribute().setTrue(false);
+            //    rule.setUsed(true);
+            //}
+
+        }
+
+        for (Object i : node.getChildren()) {
+            TreeItem ti = (TreeItem) i;
+
+            processAllQuestions(ti);
+        }
+    }
+
     private static void processAllRules(TreeItem node) {
         Rule rule = (Rule) node.getValue();
 
-        if (rule.getOperation() == Rule.Operation.AND && checkEvenOneChildrenUsed(node) && !rule.isUsed()) {
-            for (Object i : node.getChildren()) {
-                TreeItem ti = (TreeItem) i;
-                Rule irule = (Rule) ti.getValue();
+        //Три состояния:
+        //Правило сработало/несработало | срабатывает, когда устанавливает значение atr.setTrue
+        //Атрибут верно/неверно         | срабатывает, когда сравнивается значение atr.value и rule.value
+        //Атрибут введен/невведен       | срабатывает, когда совершается ввод данных из UI
 
-                //if one of children is false -> all rules is false
-                if (irule.getAttribute().isExist() == Attribute.IsExist.EXIST) {
-                    if (!irule.getValue().equals(irule.getAttribute().getValue())) {
-                        rule.setUsed(true);
-                        rule.getAttribute().setValue(null);
+        //Если операция "И" и хоть одно правило у дочернего эл-та сработало и это правило несработало то
+        //
+
+        if (rule.getAttribute().getType() != Attribute.Type.QUESTION) {
+            if (rule.getOperation() == Rule.Operation.AND && checkEvenOneChildrenUsed(node) && !rule.isUsed()) {
+                for (Object i : node.getChildren()) {
+                    TreeItem ti = (TreeItem) i;
+                    Rule irule = (Rule) ti.getValue();
+
+                    //Если хоть где то не правильно ответили, то устанавливаем значение в false
+                    if (irule.getAttribute().isEntered()) {
+                        if (!irule.getAttribute().isTrue()) {
+                            rule.setUsed(true);
+                            rule.getAttribute().setTrue(false);
+                            rule.getAttribute().setValue(rule.getValue());
+                        }
+                    } else {
+                        if (irule.isUsed() && !irule.getAttribute().isTrue()) {
+                            //rule.setUsed(true);
+                        }
                     }
-                } else if (irule.getAttribute().isExist() == Attribute.IsExist.EXIST_DO_NOT_KNOW) {
-                    rule.setUsed(true);
-                    rule.getAttribute().setValue(null);
                 }
-            }
 
-            if (checkAllChildrenUsed(node) && !rule.isUsed()) {
-                rule.setUsed(true);
-                rule.getAttribute().setValue(rule.getValue());
+                //Если все подправила верные, то и правило верное
+                if (checkAllRulesTrue(node)) {
+                    rule.setUsed(true);
+                    rule.getAttribute().setTrue(true);
+                    rule.getAttribute().setValue(rule.getValue());
+                }
             }
         }
 
@@ -366,6 +524,19 @@ public class DataManager {
 
             processAllRules(ti);
         }
+    }
+
+    private static boolean checkAllRulesTrue(TreeItem node) {
+        for (Object i : node.getChildren()) {
+            TreeItem ti = (TreeItem) i;
+            Rule rule = (Rule) ti.getValue();
+
+            if (!rule.getAttribute().isTrue()) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     private static boolean checkEvenOneChildrenUsed(TreeItem node) {
@@ -400,17 +571,19 @@ public class DataManager {
         return flag;
     }
 
-    public static boolean checkAllObjectsExistsDontKnow(TreeItem node) {
+    public static boolean checkAllObjectsUsed(TreeItem node) {
+        boolean hasTrueValue = true;
+
         for (Object i : node.getChildren()) {
             TreeItem ti = (TreeItem) i;
             Rule rule = (Rule) ti.getValue();
 
-            if (rule.getAttribute().isExist() != Attribute.IsExist.EXIST_DO_NOT_KNOW) {
-                return false;
+            if (!rule.isUsed()) {
+                hasTrueValue = false;
             }
         }
 
-        return true;
+        return hasTrueValue;
     }
 
     public static TreeItem getPreferObject(TreeItem root) {
@@ -455,7 +628,7 @@ public class DataManager {
                     rule.getAttribute().getValue() == null)
                 tmpCount++;
 
-            if (!ti.getChildren().isEmpty() && rule.getAttribute().isExist() != Attribute.IsExist.EXIST) {
+            if (!ti.getChildren().isEmpty() && rule.getAttribute().isEntered()) {
                 getQuestionsCountInTreeItemRec(ti);
             }
         }

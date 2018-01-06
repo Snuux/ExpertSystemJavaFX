@@ -11,7 +11,8 @@ public class Rule<T> implements Serializable {
     private static int count = 0;
     private String tag;
     private Operation operation;
-    private boolean used;
+
+    private boolean isUsed;
 
     public Rule(String tag, Attribute attribute, T value) {
         this.id = count++;
@@ -19,7 +20,7 @@ public class Rule<T> implements Serializable {
         this.tag = tag;
         this.attribute = attribute;
         this.value = value;
-        this.used = false;
+        this.isUsed = false;
         this.operation = NO_OP;
     }
 
@@ -40,11 +41,11 @@ public class Rule<T> implements Serializable {
     }
 
     public boolean isUsed() {
-        return used;
+        return isUsed;
     }
 
     public void setUsed(boolean used) {
-        this.used = used;
+        this.isUsed = used;
     }
 
     public void setOperation(Operation operation) {
@@ -69,8 +70,9 @@ public class Rule<T> implements Serializable {
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(attribute.getText()).append(", ");
-        stringBuilder.append("ruleIsUsed: ").append(isUsed()).append(", ");
-        stringBuilder.append("atrHasValue: ").append(getAttribute().isExist()).append(", ");
+        stringBuilder.append("isUsed: ").append(isUsed()).append(", ");
+        stringBuilder.append("aisTrue: ").append(getAttribute().isTrue()).append(", ");
+        stringBuilder.append("aisEntered: ").append(getAttribute().isEntered()).append(", ");
         stringBuilder.append(tag).append(" == ").append(value);
 
         if (operation != null)

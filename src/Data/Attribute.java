@@ -10,13 +10,24 @@ public class Attribute<T> implements Serializable{
     private Type type;
     private ValueType valueType;
     private ArrayList<String> variantAnswers;
-    private IsExist isExist;
+
+    private boolean isEntered;
+    private boolean isTrue;
 
     public Attribute(String text, T value, Type type) {
         this.text = text;
         this.value = value;
         this.type = type;
-        this.isExist = IsExist.NOT_EXIST;
+        this.isEntered = false;
+        this.isTrue = false;
+    }
+
+    public boolean isTrue() {
+        return isTrue;
+    }
+
+    public void setTrue(boolean aTrue) {
+        isTrue = aTrue;
     }
 
     //truefalse
@@ -39,16 +50,15 @@ public class Attribute<T> implements Serializable{
     public Attribute<T> setValue(T value) {
         this.value = value;
 
-        if (value != null)
-            this.isExist = IsExist.EXIST;
-        else
-            this.isExist = IsExist.EXIST_DO_NOT_KNOW;
-
         return this;
     }
 
-    public IsExist isExist() {
-        return isExist;
+    public boolean isEntered() {
+        return isEntered;
+    }
+
+    public void setEntered(boolean entered) {
+        isEntered = entered;
     }
 
     public String getText() {
@@ -104,11 +114,5 @@ public class Attribute<T> implements Serializable{
         TRUE_FALSE,
         STRING,
         NUMBER
-    }
-
-    public enum IsExist {
-        EXIST,
-        EXIST_DO_NOT_KNOW,
-        NOT_EXIST
     }
 }

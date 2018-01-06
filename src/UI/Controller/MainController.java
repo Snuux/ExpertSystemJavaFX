@@ -56,19 +56,43 @@ public class MainController implements Initializable {
         //magic begins
         Rule currentRule = (Rule) DataManager.getQuestion(currentNode).getValue();
 
-        //true magic begins
+        //Если объект имеет атрибут -> вывести объект .
+        //Если объект не имеет атрибут -> продолжить .
+        //Если объект не имеет атрибут и правило сработало -> сменить объект .
+        //Если ни один объект не имеет атрибут и все правила сработали -> вывести нет объекта .
+
         Rule rule = (Rule) currentNode.getValue();
-        if (rule.getAttribute().isExist() == Attribute.IsExist.EXIST_DO_NOT_KNOW) {
+
+        if (rule.isUsed()) {
+            if (rule.getAttribute().isTrue()) {
+                objectSelected(currentNode);
+                return;
+            } else if (!rule.getAttribute().isTrue()) {
+                if (DataManager.checkAllObjectsUsed(DataManager.getTree())) { //all objects not true
+                    noObjectSelected();
+                    return;
+                } else {
+                    currentNode = Data.DataManager.getPreferObject(DataManager.getTree());
+                    currentRule = (Rule) DataManager.getQuestion(currentNode).getValue();
+                }
+            }
+        }
+
+
+        //true magic begins
+        /*Rule rule = (Rule) currentNode.getValue();
+        if (rule.getAttribute().isEntered() || (!rule.getAttribute().isEntered() && rule.getAttribute().getValue() == null)) {
             if (DataManager.checkAllObjectsExistsDontKnow(DataManager.getTree())) {
                 noObjectSelected();
                 return;
             } else
                 currentNode = Data.DataManager.getPreferObject(DataManager.getTree());
 
-        } else if (rule.getAttribute().isExist() == Attribute.IsExist.EXIST) {
+        } else if (rule.getAttribute().isEntered() && rule.getAttribute().getValue() != null) {
             objectSelected(currentNode);
             return;
-        }
+        }*/
+
 
         showQuestion(currentRule);
     }
@@ -77,13 +101,12 @@ public class MainController implements Initializable {
         questionLabel.setText(rule.getAttribute().getText());
 
         buttonsBox.getChildren().clear();
-
         if (rule.getAttribute().getType() == Attribute.Type.QUESTION) {
             if (rule.getAttribute().getValueType() == Attribute.ValueType.TRUE_FALSE || rule.getAttribute().getValueType() == Attribute.ValueType.TRUE_FALSE_DONT_KNOW) {
 
                 Button button1 = new Button("Да");
                 button1.setOnAction(e -> {
-                    rule.setUsed(true);
+                    rule.getAttribute().setEntered(true);
                     rule.getAttribute().setValue(1);
                     processNextQuestion();
                 });
@@ -91,8 +114,7 @@ public class MainController implements Initializable {
 
                 Button button2 = new Button("Нет");
                 button2.setOnAction(e -> {
-                    System.out.println("lol");
-                    rule.setUsed(true);
+                    rule.getAttribute().setEntered(true);
                     rule.getAttribute().setValue(0);
                     processNextQuestion();
                 });
