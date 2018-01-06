@@ -54,15 +54,20 @@ public class MainController implements Initializable {
 
     private void processNextQuestion() {
         //magic begins
-        int kk = 0;
-        if (currentNode == null)
-            kk = 1;
-
         Rule currentRule = (Rule) DataManager.getQuestion(currentNode).getValue();
 
-        if (currentRule.isUsed()) {
-            currentNode = Data.DataManager.getPreferObject(DataManager.getTree());
-            currentRule = (Rule) DataManager.getQuestion(currentNode).getValue();
+        //true magic begins
+        Rule rule = (Rule) currentNode.getValue();
+        if (rule.getAttribute().isExist() == Attribute.IsExist.EXIST_DO_NOT_KNOW) {
+            if (DataManager.checkAllObjectsExistsDontKnow(DataManager.getTree())) {
+                noObjectSelected();
+                return;
+            } else
+                currentNode = Data.DataManager.getPreferObject(DataManager.getTree());
+
+        } else if (rule.getAttribute().isExist() == Attribute.IsExist.EXIST) {
+            objectSelected(currentNode);
+            return;
         }
 
         showQuestion(currentRule);
@@ -130,5 +135,29 @@ public class MainController implements Initializable {
     @FXML
     public void handleShowAllObjectsGraph(ActionEvent actionEvent) {
         Main.getQuestionGraphStage().show();
+    }
+
+    private void objectSelected(TreeItem node) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Результат");
+        alert.setHeaderText("Экспертная система нашла нужный объект");
+        alert.setContentText(node.toString());
+        alert.showAndWait().ifPresent(rs -> {
+            if (rs == ButtonType.OK) {
+                //TODO Reset all Attributes and rules isUsed, values and etc
+            }
+        });
+    }
+
+    private void noObjectSelected() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Результат");
+        alert.setHeaderText("К сожалению экспертная система на смогла выбрать объект!");
+        alert.setContentText("Попробуйте заного...");
+        alert.showAndWait().ifPresent(rs -> {
+            if (rs == ButtonType.OK) {
+                //TODO Reset all Attributes and rules isUsed, values and etc
+            }
+        });
     }
 }
