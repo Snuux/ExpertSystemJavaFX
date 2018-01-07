@@ -282,21 +282,6 @@ public class DataManager {
         //           / \        //
         //          H   F       //
         //////////////////////////
-
-        //Проверяем правило, если оно ещё не отработало, а аттрибут не является вопросом, то смотрим на
-        //и если они не отработали, то запускаем функцию рекурсивно для них
-        if (!sourceRule.isUsed() && sourceRule.getAttribute().getType() != Attribute.Type.QUESTION) {
-            for (TreeItem<Rule> innerNode : node.getChildren()) {
-                Rule rule = innerNode.getValue();
-                if (!rule.isUsed()) {
-                    return getQuestion(innerNode);
-                }
-            }
-        }//Если правило устанавливает значение вопроса и не было использовано, то возвращаем вопрос
-        else if (!sourceRule.isUsed() && sourceRule.getAttribute().getType() == Attribute.Type.QUESTION) {
-            return node;
-        }
-
         //If H && F is used then process E rule
         /*if (sourceRule.getAttribute().getType() == Attribute.Type.QUESTION) {
             if (sourceRule.getAttribute().getValue() != null) {
@@ -318,11 +303,30 @@ public class DataManager {
             }
         }*/
 
-        if (sourceRule.getAttribute().getType() == Attribute.Type.OBJECT && sourceRule.isUsed()) {
-            return getQuestion(getPreferObject(tree));
+        //Проверяем правило, если оно ещё не отработало, а аттрибут не является вопросом, то смотрим на
+        //и если они не отработали, то запускаем функцию рекурсивно для них
+        if (!sourceRule.isUsed() && sourceRule.getAttribute().getType() != Attribute.Type.QUESTION) {
+            for (TreeItem<Rule> innerNode : node.getChildren()) {
+                Rule rule = innerNode.getValue();
+                if (!rule.isUsed()) {
+                    return getQuestion(innerNode);
+                }
+            }
+        }//Если правило устанавливает значение вопроса и не было использовано, то возвращаем вопрос
+        else if (!sourceRule.isUsed() && sourceRule.getAttribute().getType() == Attribute.Type.QUESTION) {
+            return node;
         }
 
-        return null;
+        if (sourceRule.getAttribute().getType() == Attribute.Type.OBJECT && sourceRule.isUsed()) {
+            if (sourceRule.isEqualToAttribute()) {
+                return node;
+            } else if (getPreferObject(tree) != null) {
+                return getQuestion(getPreferObject(tree));
+            }
+        }
+
+//        return null;
+        return new TreeItem<>(new Rule<>("EMPTY", null, null));
     }
 
     private static void processAllRules(TreeItem<Rule> node) {
