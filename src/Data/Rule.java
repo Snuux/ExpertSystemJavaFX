@@ -23,6 +23,14 @@ public class Rule<T> implements Serializable {
         this.operation = NO_OP;
     }
 
+    public boolean isEqualToAttribute() {
+        return this.value.equals(attribute.getValue());
+    }
+
+    public void setValueToAttribute() {
+        attribute.setValue(value);
+    }
+
     public Attribute getAttribute() {
         return attribute;
     }

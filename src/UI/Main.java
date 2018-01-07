@@ -19,12 +19,6 @@ public class Main extends Application {
         primaryStage.show();
         mainStage = primaryStage;
 
-//        rulesStage = new Stage();
-//        Scene scene = new Scene(FXMLLoader.load(getClass().getResource("UI/FXML/rules.fxml")));
-//        rulesStage.setTitle("Список правил");
-//        rulesStage.setScene(scene);
-//        rulesStage.hide();
-
         questionGraphStage = new Stage();
         Scene scene1 = new Scene(FXMLLoader.load(getClass().getResource("FXML/questionGraph.fxml")));
         questionGraphStage.setTitle("Дерево правил");

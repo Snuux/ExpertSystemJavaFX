@@ -91,6 +91,10 @@ public class Attribute<T> implements Serializable{
         return text;
     }
 
+    public boolean hasValue() {
+        return value != null;
+    }
+
     public enum Type {
         OBJECT,
         TEMPORARY,

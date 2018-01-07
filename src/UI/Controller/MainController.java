@@ -43,7 +43,11 @@ public class MainController implements Initializable {
         });
     }
 
-    TreeItem currentNode;
+    private static TreeItem currentNode;
+
+    public static TreeItem getCurrentNode() {
+        return currentNode;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -53,23 +57,27 @@ public class MainController implements Initializable {
     }
 
     private void processNextQuestion() {
-        //magic begins
+        //Получение вопроса для текущего объекта
         Rule currentRule = (Rule) DataManager.getQuestion(currentNode).getValue();
 
-        //true magic begins
-        Rule rule = (Rule) currentNode.getValue();
-        if (rule.getAttribute().isExist() == Attribute.IsExist.EXIST_DO_NOT_KNOW) {
-            if (DataManager.checkAllObjectsExistsDontKnow(DataManager.getTree())) {
-                noObjectSelected();
-                return;
-            } else
-                currentNode = Data.DataManager.getPreferObject(DataManager.getTree());
+//        if (currentRule.getAttribute().hasValue()) {
+//            objectSelected(DataManager.getQuestion(currentNode));
+//        }
 
-        } else if (rule.getAttribute().isExist() == Attribute.IsExist.EXIST) {
+        //Выбор ветки графа (объекта, который будем рассматривать
+        Rule rule = (Rule) currentNode.getValue();
+        if (rule.getAttribute().hasValue()) {
             objectSelected(currentNode);
             return;
+        } else {
+            currentNode = DataManager.getPreferObject(DataManager.getTree());
+            if (currentNode == null) {
+                noObjectSelected();
+                return;
+            }
         }
 
+        //Получив вопрос, показываем его
         showQuestion(currentRule);
     }
 
@@ -91,7 +99,6 @@ public class MainController implements Initializable {
 
                 Button button2 = new Button("Нет");
                 button2.setOnAction(e -> {
-                    System.out.println("lol");
                     rule.setUsed(true);
                     rule.getAttribute().setValue(0);
                     processNextQuestion();

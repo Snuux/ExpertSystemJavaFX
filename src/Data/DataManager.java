@@ -2,6 +2,7 @@ package Data;
 
 import Data.Serialization.FileSerialization;
 import Data.Serialization.Tree;
+import UI.Controller.MainController;
 import javafx.scene.control.TreeItem;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class DataManager {
         //load();
     }
 
-    public static void addAllAttributes(Attribute... atrs) {
+    private static void addAllAttributes(Attribute... atrs) {
         for (Attribute a : atrs) {
             attributes.add(a);
         }
@@ -88,9 +89,9 @@ public class DataManager {
         tree = R;
 
         addRule(R, null, new Rule("O1", o, "Властелин колец	"));
-        addRule(R, null, new Rule("O2", o, "Гарри Поттер"));
-        addRule(R, null, new Rule("O3", o, "Тихий Дон"));
-        addRule(R, null, new Rule("O4", o, "Евгений Онегин"));
+//        addRule(R, null, new Rule("O2", o, "Гарри Поттер"));
+//        addRule(R, null, new Rule("O3", o, "Тихий Дон"));
+//        addRule(R, null, new Rule("O4", o, "Евгений Онегин"));
         addRule(R, null, new Rule("O5", o, "Искусство войны"));
         //addRule(R, null, new Rule("O6", o, "Фауст"));
         //addRule(R, null, new Rule("O7", o, "Как доводить дела до цонца"));
@@ -103,18 +104,18 @@ public class DataManager {
         TreeItem<Rule> O1 = addRule(getNodeFromNodeWithTag(R, "O1"), Rule.Operation.AND,
                 new Rule<>("A1", a1, "Художественная"),
                 new Rule<>("A2", a2, "Другой"),
-                new Rule<>("A3", a3, "Подарочная"),
+                new Rule<>("A3", a3, "Подарочная")/*,
                 new Rule<>("A4", a4, "Есть"),
                 new Rule<>("A5", a5, "Классическая"),
                 new Rule<>("A6", a6, "Многотомник"),
                 new Rule<>("A7", a7, "Зарубежное"),
                 new Rule<>("A8", a8, "Для всех"),
-                new Rule<>("A9", a9, "Проза"));
+                new Rule<>("A9", a9, "Проза")*/);
 
         addRule(getNodeFromNodeWithTag(O1, "A1"), Rule.Operation.AND, new Rule<>("Q11", q11, 1), new Rule<>("Q12", q12, 1));
         addRule(getNodeFromNodeWithTag(O1, "A2"), Rule.Operation.AND, new Rule<>("Q61", q61, 1), new Rule<>("Q62", q62, 1));
         addRule(getNodeFromNodeWithTag(O1, "A3"), Rule.Operation.AND, new Rule<>("Q81", q81, 1), new Rule<>("Q82", q82, 1));
-        addRule(getNodeFromNodeWithTag(O1, "A4"), Rule.Operation.AND, new Rule<>("Q91", q91, 1), new Rule<>("Q92", q92, 1));
+/*        addRule(getNodeFromNodeWithTag(O1, "A4"), Rule.Operation.AND, new Rule<>("Q91", q91, 1), new Rule<>("Q92", q92, 1));
         addRule(getNodeFromNodeWithTag(O1, "A5"), Rule.Operation.AND, new Rule<>("Q121", q121, 1), new Rule<>("Q122", q122, 1));
         addRule(getNodeFromNodeWithTag(O1, "A6"), Rule.Operation.AND, new Rule<>("Q141", q141, 1), new Rule<>("Q142", q142, 1));
         addRule(getNodeFromNodeWithTag(O1, "A7"), Rule.Operation.AND, new Rule<>("Q151", q151, 1), new Rule<>("Q152", q152, 1));
@@ -182,51 +183,30 @@ public class DataManager {
         addRule(getNodeFromNodeWithTag(O4, "A6"), Rule.Operation.AND, new Rule<>("Q131", q131, 1), new Rule<>("Q132", q132, 1));
         addRule(getNodeFromNodeWithTag(O4, "A7"), Rule.Operation.AND, new Rule<>("Q161", q161, 1), new Rule<>("Q162", q162, 1));
         addRule(getNodeFromNodeWithTag(O4, "A8"), Rule.Operation.AND, new Rule<>("Q191", q191, 1), new Rule<>("Q192", q192, 1));
-        addRule(getNodeFromNodeWithTag(O4, "A9"), Rule.Operation.AND, new Rule<>("Q211", q211, 1), new Rule<>("Q212", q212, 1));
+        addRule(getNodeFromNodeWithTag(O4, "A9"), Rule.Operation.AND, new Rule<>("Q211", q211, 1), new Rule<>("Q212", q212, 1));*/
 
         TreeItem<Rule> O5 = addRule(getNodeFromNodeWithTag(R, "O5"), Rule.Operation.AND,
                 new Rule<>("A1", a1, "Философская"),
                 new Rule<>("A2", a2, "Другой"),
-                new Rule<>("A3", a3, "Подарочная"),
+                new Rule<>("A3", a3, "Подарочная")/*,
                 new Rule<>("A4", a4, "Нет"),
                 new Rule<>("A5", a5, "Классическая"),
                 new Rule<>("A6", a6, "Однотомник"),
                 new Rule<>("A7", a7, "Зарубежное"),
                 new Rule<>("A8", a8, "Для взрослых"),
-                new Rule<>("A9", a9, "Проза"));
+                new Rule<>("A9", a9, "Проза")*/);
 
         addRule(getNodeFromNodeWithTag(O5, "A1"), Rule.Operation.AND, new Rule<>("Q21", q21, 1), new Rule<>("Q22", q22, 1));
         addRule(getNodeFromNodeWithTag(O5, "A2"), Rule.Operation.AND, new Rule<>("Q61", q61, 1), new Rule<>("Q62", q62, 1));
         addRule(getNodeFromNodeWithTag(O5, "A3"), Rule.Operation.AND, new Rule<>("Q81", q81, 1), new Rule<>("Q82", q82, 1));
-        addRule(getNodeFromNodeWithTag(O5, "A4"), Rule.Operation.AND, new Rule<>("Q101", q101, 1), new Rule<>("Q102", q102, 1));
+/*        addRule(getNodeFromNodeWithTag(O5, "A4"), Rule.Operation.AND, new Rule<>("Q101", q101, 1), new Rule<>("Q102", q102, 1));
         addRule(getNodeFromNodeWithTag(O5, "A5"), Rule.Operation.AND, new Rule<>("Q121", q121, 1), new Rule<>("Q122", q122, 1));
         addRule(getNodeFromNodeWithTag(O5, "A6"), Rule.Operation.AND, new Rule<>("Q131", q131, 1), new Rule<>("Q132", q132, 1));
         addRule(getNodeFromNodeWithTag(O5, "A7"), Rule.Operation.AND, new Rule<>("Q151", q151, 1), new Rule<>("Q152", q152, 1));
         addRule(getNodeFromNodeWithTag(O5, "A8"), Rule.Operation.AND, new Rule<>("Q191", q191, 1), new Rule<>("Q192", q192, 1));
-        addRule(getNodeFromNodeWithTag(O5, "A9"), Rule.Operation.AND, new Rule<>("Q201", q201, 1), new Rule<>("Q202", q202, 1));
-
-        /*TreeItem<Rule> O1 = addRule(getNodeFromNodeWithTag(R, "O1"), Rule.Operation.AND, new Rule("A1", a1, "Художественная"), new Rule("A2", a2, "Другой"));
-        TreeItem<Rule> A1 = addRule(getNodeFromNodeWithTag(O1, "A1"), Rule.Operation.AND, new Rule("Q1", q1, 1), new Rule("Q2", q2, 1));
-        TreeItem<Rule> A2 = addRule(getNodeFromNodeWithTag(O1, "A2"), Rule.Operation.AND, new Rule("Q3", q3, 1), new Rule("Q4", q4, 1));
-
-        TreeItem<Rule> O2 = addRule(getNodeFromNodeWithTag(R, "O2"), Rule.Operation.AND, new Rule("A1", a1, "Философский"), new Rule("A2", a2, "Другой"), new Rule("A3", a3, "Подарочный"));
-        TreeItem<Rule> A3 = addRule(getNodeFromNodeWithTag(O2, "A3"), Rule.Operation.AND, new Rule("Q5", q5, 1), new Rule("Q6", q6, 1));
-
-        TreeItem<Rule> A11 = addRule(getNodeFromNodeWithTag(O2, "A1"), Rule.Operation.AND, new Rule("Q1", q1, 1), new Rule("Q2", q2, 1), new Rule("Q3", q3, 1));
-        TreeItem<Rule> A22 = addRule(getNodeFromNodeWithTag(O2, "A2"), Rule.Operation.AND, new Rule("Q3", q3, 1), new Rule("Q4", q4, 1));*/
-
-        //System.out.println(getQuestionsCountInTreeItem(O1));
-        //System.out.println(getQuestionsCountInTreeItem(O2));
-
-        //System.out.println(getQuestion(R.getChildren().get(0).getChildren().get(0).getChildren().get(0)).getValue());
+        addRule(getNodeFromNodeWithTag(O5, "A9"), Rule.Operation.AND, new Rule<>("Q201", q201, 1), new Rule<>("Q202", q202, 1));*/
 
         FileSerialization.<ArrayList>serialize(attributes, "save/Attributes");
-
-        //Tree treeSer = new Tree(new Node(new Rule("ROOT", r, null)));
-        //FileSerialization.copyTree(R, treeSer.getRoot());
-        //FileSerialization.treeSerialize(treeSer.getRoot(), "save/TreeSer");
-
-
     }
 
     public static void load() {
@@ -286,8 +266,12 @@ public class DataManager {
         return attributes;
     }
 
-    public static TreeItem getQuestion(TreeItem node) {
-        Rule sourceRule = (Rule) node.getValue();
+    public static TreeItem<Rule> getQuestion(TreeItem<Rule> node) {
+        //получаем правило
+        Rule sourceRule = node.getValue();
+
+        //обрабатываем всё дерево
+        processAllRules(tree);
 
         //-----Tree example-----//
         //          A           //
@@ -297,23 +281,29 @@ public class DataManager {
         //         D  E  I      //
         //           / \        //
         //          H   F       //
-        //          |           //
-        //          A           //
-        //         / \          //
-        //        B   C         //
-        //          / | \       //
-        //         D  E  I      //
-        //           / \        //
-        //          H   F       //
         //////////////////////////
 
-        int count = 0;
-        while (count++ < 10) {
-            processAllRules(tree);
+        //Проверяем правило, если оно ещё не отработало, а аттрибут не является вопросом, то смотрим на
+        //и если они не отработали, то запускаем функцию рекурсивно для них
+        if (!sourceRule.isUsed() && sourceRule.getAttribute().getType() != Attribute.Type.QUESTION) {
+            for (TreeItem<Rule> innerNode : node.getChildren()) {
+                Rule rule = innerNode.getValue();
+                if (!rule.isUsed()) {
+                    return getQuestion(innerNode);
+                }
+            }
+        }//Если правило устанавливает значение вопроса и не было использовано, то возвращаем вопрос
+        else if (!sourceRule.isUsed() && sourceRule.getAttribute().getType() == Attribute.Type.QUESTION) {
+            return node;
         }
 
         //If H && F is used then process E rule
-        if (sourceRule.getAttribute().getType() == Attribute.Type.QUESTION) {// && sourceRule.getAttribute().isExist() != Attribute.IsExist.EXIST) { //Если узел Q
+        /*if (sourceRule.getAttribute().getType() == Attribute.Type.QUESTION) {
+            if (sourceRule.getAttribute().getValue() != null) {
+                sourceRule.setUsed(true);
+                processAllRules(tree);
+                return getQuestion(MainController.getCurrentNode());
+            }
             return node;
         } else if (sourceRule.getAttribute().getType() == Attribute.Type.ATTRIBUTE ||
                 sourceRule.getAttribute().getType() == Attribute.Type.TEMPORARY ||
@@ -326,19 +316,52 @@ public class DataManager {
                 if (!rule.isUsed() && sourceRule.getAttribute().isExist() != Attribute.IsExist.EXIST)
                     return getQuestion(ti);
             }
-        }
+        }*/
 
         if (sourceRule.getAttribute().getType() == Attribute.Type.OBJECT && sourceRule.isUsed()) {
-            return node;
+            return getQuestion(getPreferObject(tree));
         }
 
         return null;
     }
 
-    private static void processAllRules(TreeItem node) {
-        Rule rule = (Rule) node.getValue();
+    private static void processAllRules(TreeItem<Rule> node) {
+        //Проходим по всем дочерним правилам, отрабатываем те, что возможно
+        for (TreeItem<Rule> innerNode : node.getChildren()) {
+            Rule innerRule = innerNode.getValue();
+            if (!innerRule.isUsed())
+                processAllRules(innerNode);
+        }
 
+        //Получаем текущее правило
+        Rule rule = node.getValue();
+
+        //Обрабатываем случай операции && - AND
+        //Если хоть один дочерний элемент известен и не соответствует правилу,
+        //то текущее правило тоже не работает
         if (rule.getOperation() == Rule.Operation.AND && checkEvenOneChildrenUsed(node) && !rule.isUsed()) {
+            for(TreeItem<Rule> innerItem : node.getChildren()) {
+                Rule innerRule = innerItem.getValue();
+                if (innerRule.isUsed() && !innerRule.isEqualToAttribute()) {
+                    rule.setUsed(true);
+                    break;
+                }
+            }
+        }
+
+        //Даём текущему правилу отработать, если:
+        // 1. Все дочерние правила отработали
+        // 2. Предыдущая проверка не нашла атрибут, который не соответствует правилу
+        // 3. У текущего атрибута нет значения
+        if (!rule.isUsed() && rule.getOperation() == Rule.Operation.AND && checkAllChildrenUsed(node)) {
+            rule.setUsed(true);
+            rule.setValueToAttribute();
+        }
+
+
+
+
+        /*if (rule.getOperation() == Rule.Operation.AND && checkEvenOneChildrenUsed(node) && !rule.isUsed()) {
             for (Object i : node.getChildren()) {
                 TreeItem ti = (TreeItem) i;
                 Rule irule = (Rule) ti.getValue();
@@ -348,10 +371,12 @@ public class DataManager {
                     if (!irule.getValue().equals(irule.getAttribute().getValue())) {
                         rule.setUsed(true);
                         rule.getAttribute().setValue(null);
+                        break;
                     }
                 } else if (irule.getAttribute().isExist() == Attribute.IsExist.EXIST_DO_NOT_KNOW) {
                     rule.setUsed(true);
                     rule.getAttribute().setValue(null);
+                    break;
                 }
             }
 
@@ -359,105 +384,59 @@ public class DataManager {
                 rule.setUsed(true);
                 rule.getAttribute().setValue(rule.getValue());
             }
-        }
-
-        for (Object i : node.getChildren()) {
-            TreeItem ti = (TreeItem) i;
-
-            processAllRules(ti);
-        }
+        }*/
     }
 
-    private static boolean checkEvenOneChildrenUsed(TreeItem node) {
-        boolean flag = false;
-
-        for (Object i : node.getChildren()) {
-            TreeItem ti = (TreeItem) i;
-            Rule rule = (Rule) ti.getValue();
-
-            if (rule.isUsed()) {
-                flag = true;
-                return flag;
+    private static boolean checkEvenOneChildrenUsed(TreeItem<Rule> node) {
+        for (TreeItem<Rule> innerItem : node.getChildren()) {
+            if (innerItem.getValue().isUsed()) {
+                return true;
             }
         }
-
-        return flag;
+        return false;
     }
 
-    private static boolean checkAllChildrenUsed(TreeItem node) {
-        boolean flag = true;
-
-        for (Object i : node.getChildren()) {
-            TreeItem ti = (TreeItem) i;
-            Rule rule = (Rule) ti.getValue();
-
-            if (!rule.isUsed()) {
-                flag = false;
-                return flag;
-            }
-        }
-
-        return flag;
-    }
-
-    public static boolean checkAllObjectsExistsDontKnow(TreeItem node) {
-        for (Object i : node.getChildren()) {
-            TreeItem ti = (TreeItem) i;
-            Rule rule = (Rule) ti.getValue();
-
-            if (rule.getAttribute().isExist() != Attribute.IsExist.EXIST_DO_NOT_KNOW) {
+    private static boolean checkAllChildrenUsed(TreeItem<Rule> node) {
+        for(TreeItem<Rule> innerItem : node.getChildren()) {
+            if (!innerItem.getValue().isUsed()) {
                 return false;
             }
         }
-
         return true;
     }
 
-    public static TreeItem getPreferObject(TreeItem root) {
+    public static TreeItem<Rule> getPreferObject(TreeItem<Rule> root) {
         int min = Integer.MAX_VALUE;
         TreeItem minTree = null;
 
-        for (Object i : root.getChildren()) {
-            TreeItem ti = (TreeItem) i;
-            Rule rule = (Rule) ti.getValue();
+        for (TreeItem<Rule> i : root.getChildren()) {
+            Rule rule = i.getValue();
 
-            if (rule.isUsed())
-                continue;
+            if (!rule.isUsed()) {
+                int current = getQuestionsCountInTreeItem(i);
 
-            int cur = getQuestionsCountInTreeItem(ti);
-
-            if (min > cur) {
-                min = cur;
-                minTree = ti;
+                if (min > current) {
+                    min = current;
+                    minTree = i;
+                }
             }
         }
 
         return minTree;
     }
 
-    static int tmpCount = 0;
+    private static int getQuestionsCountInTreeItem(TreeItem<Rule> node) {
+        int tmpCount = 0;
+        for (TreeItem<Rule> i : node.getChildren()) {
+            Rule rule = i.getValue();
 
-    private static int getQuestionsCountInTreeItem(TreeItem node) {
-        tmpCount = 0;
-
-        getQuestionsCountInTreeItemRec(node);
-
-        return tmpCount;
-    }
-
-    private static void getQuestionsCountInTreeItemRec(TreeItem node) {
-
-        for (Object i : node.getChildren()) {
-            TreeItem ti = (TreeItem) i;
-            Rule rule = (Rule) ti.getValue();
-
-            if (rule.getAttribute().getType() == Attribute.Type.QUESTION &&  //Если тип == вопрос
-                    rule.getAttribute().getValue() == null)
+            if (rule.getAttribute().getType() == Attribute.Type.QUESTION && rule.getAttribute().getValue() == null)
                 tmpCount++;
 
-            if (!ti.getChildren().isEmpty() && rule.getAttribute().isExist() != Attribute.IsExist.EXIST) {
-                getQuestionsCountInTreeItemRec(ti);
+            if (!i.getChildren().isEmpty() && !rule.getAttribute().hasValue()) {
+                getQuestionsCountInTreeItem(i);
             }
         }
+        return tmpCount;
     }
 }
