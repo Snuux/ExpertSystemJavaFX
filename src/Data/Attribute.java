@@ -10,18 +10,14 @@ public class Attribute<T> implements Serializable{
     private Type type;
     private ValueType valueType;
     private ArrayList<String> variantAnswers;
-<<<<<<< HEAD
 
     private boolean isEntered;
     private boolean isTrue;
-=======
->>>>>>> test
 
     public Attribute(String text, T value, Type type) {
         this.text = text;
         this.value = value;
         this.type = type;
-<<<<<<< HEAD
         this.isEntered = false;
         this.isTrue = false;
     }
@@ -32,8 +28,6 @@ public class Attribute<T> implements Serializable{
 
     public void setTrue(boolean aTrue) {
         isTrue = aTrue;
-=======
->>>>>>> test
     }
 
     //truefalse
@@ -55,7 +49,6 @@ public class Attribute<T> implements Serializable{
 
     public Attribute<T> setValue(T value) {
         this.value = value;
-<<<<<<< HEAD
 
         return this;
     }
@@ -68,11 +61,6 @@ public class Attribute<T> implements Serializable{
         isEntered = entered;
     }
 
-=======
-        return this;
-    }
-
->>>>>>> test
     public String getText() {
         return text;
     }
@@ -111,10 +99,6 @@ public class Attribute<T> implements Serializable{
     @Override
     public String toString() {
         return text;
-    }
-
-    public boolean hasValue() {
-        return value != null;
     }
 
     public enum Type {

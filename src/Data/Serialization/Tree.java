@@ -8,7 +8,7 @@ import java.util.ArrayList;
  *
  * @param <T> Any class type
  */
-public class Tree<T> implements Serializable {
+public class Tree<T> implements Serializable{
 
     private Node<T> root;
 
@@ -50,6 +50,7 @@ public class Tree<T> implements Serializable {
     }
 
     /**
+     *
      * Check if given data is present in the tree.
      *
      * @param key The data to search for
@@ -70,6 +71,7 @@ public class Tree<T> implements Serializable {
     }
 
     /**
+     *
      * Get the number of descendants a given node has.
      *
      * @param node The node whose number of descendants is needed.
@@ -113,6 +115,7 @@ public class Tree<T> implements Serializable {
     }
 
     /**
+     *
      * Get the list of nodes arranged by the pre-order traversal of the tree.
      *
      * @return The list of nodes in the tree, arranged in the pre-order
@@ -124,6 +127,7 @@ public class Tree<T> implements Serializable {
     }
 
     /**
+     *
      * Get the list of nodes arranged by the post-order traversal of the tree.
      *
      * @return The list of nodes in the tree, arranged in the post-order
@@ -149,8 +153,9 @@ public class Tree<T> implements Serializable {
     }
 
     /**
+     *
      * Get the list of nodes in the longest path from root to any leaf in the tree.
-     * <p>
+     *
      * For example, for the below tree
      * <pre>
      *          A
@@ -161,7 +166,7 @@ public class Tree<T> implements Serializable {
      *              \
      *              F
      * </pre>
-     * <p>
+     *
      * The result would be [A, C, E, F]
      *
      * @return The list of nodes in the longest path.
@@ -180,6 +185,7 @@ public class Tree<T> implements Serializable {
 
 
     /**
+     *
      * Get the height of the tree (the number of nodes in the longest path from root to a leaf)
      *
      * @return The height of the tree.
@@ -189,6 +195,7 @@ public class Tree<T> implements Serializable {
     }
 
     /**
+     *
      * Get a list of all the paths (which is again a list of nodes along a path) from the root node to every leaf.
      *
      * @return List of paths.
