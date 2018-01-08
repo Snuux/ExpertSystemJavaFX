@@ -17,6 +17,7 @@ public class Main extends Application {
         primaryStage.setTitle("Экспертная система: Выбор книги");
         primaryStage.setScene(new Scene(root, 300, 325));
         primaryStage.show();
+        primaryStage.setOnCloseRequest(e -> System.exit(0));
         mainStage = primaryStage;
 
         questionGraphStage = new Stage();

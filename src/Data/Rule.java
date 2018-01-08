@@ -24,7 +24,10 @@ public class Rule<T> implements Serializable {
     }
 
     public boolean isEqualToAttribute() {
-        return this.value.equals(attribute.getValue());
+        return attribute.getValue() != null && this.value.equals(attribute.getValue());
+//        if (attribute.getValue() == null)
+//            return false;
+//        return ;
     }
 
     public void setValueToAttribute() {
@@ -78,7 +81,8 @@ public class Rule<T> implements Serializable {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(attribute.getText()).append(", ");
         stringBuilder.append("ruleIsUsed: ").append(isUsed()).append(", ");
-        stringBuilder.append("atrHasValue: ").append(getAttribute().isExist()).append(", ");
+        stringBuilder.append("atrHasValue: ").append(getAttribute().hasValue()).append(", ");
+        stringBuilder.append("equalsAtr: ").append(isEqualToAttribute()).append(", ");
         stringBuilder.append(tag).append(" == ").append(value);
 
         if (operation != null)
