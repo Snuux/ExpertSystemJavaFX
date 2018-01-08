@@ -4,6 +4,7 @@ import Data.Serialization.FileSerialization;
 import Data.Serialization.Tree;
 import UI.Controller.MainController;
 import javafx.scene.control.TreeItem;
+import org.w3c.dom.Attr;
 
 import java.util.ArrayList;
 
@@ -423,5 +424,17 @@ public class DataManager {
             }
         }
         return tmpCount;
+    }
+
+    public static void reset() {
+        reset(tree);
+        processAllRules(tree);
+    }
+
+    private static void reset(TreeItem<Rule> node) {
+        if (node.getChildren().size() != 0)
+            for (TreeItem<Rule> innerNode : node.getChildren())
+                reset(innerNode);
+        node.getValue().reset();
     }
 }

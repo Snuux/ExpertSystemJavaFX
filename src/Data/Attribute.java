@@ -30,7 +30,7 @@ public class Attribute<T> implements Serializable{
 
         this.valueType = valueType;
 
-        this.variantAnswers = new ArrayList();
+        this.variantAnswers = new ArrayList<>();
         this.variantAnswers.addAll(Arrays.asList(variantAnswers));
     }
 
@@ -88,6 +88,10 @@ public class Attribute<T> implements Serializable{
 
     public boolean hasValue() {
         return value != null;
+    }
+
+    public void reset() {
+        value = null;
     }
 
     public enum Type {

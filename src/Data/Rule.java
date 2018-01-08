@@ -31,6 +31,11 @@ public class Rule<T> implements Serializable {
         attribute.setValue(value);
     }
 
+    public void reset() {
+        used = false;
+        attribute.reset();
+    }
+
     public Attribute getAttribute() {
         return attribute;
     }

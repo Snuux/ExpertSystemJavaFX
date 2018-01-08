@@ -12,6 +12,7 @@ import javafx.scene.layout.VBox;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.function.Consumer;
 
 public class MainController implements Initializable {
 
@@ -156,19 +157,14 @@ public class MainController implements Initializable {
     /**
      * Метод, завершающий работу ЭС при нахождении нужного объекта
      * Показывает Alert с информацией о результате работы системы
-     *
      * @param node узел, в котором содержится отработавшее правило и найденный объект
      */
-    private void objectSelected(TreeItem node) {
+    private void objectSelected(TreeItem<Rule> node) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Результат");
         alert.setHeaderText("Экспертная система нашла нужный объект");
-        alert.setContentText(node.toString());
-        alert.showAndWait().ifPresent(rs -> {
-            if (rs == ButtonType.OK) {
-                //TODO Reset all Attributes and rules isUsed, values and etc
-            }
-        });
+        alert.setContentText(node.getValue().getAttribute().getValue().toString());
+        alert.showAndWait().ifPresent(resetConsumer);
     }
 
     /**
@@ -179,11 +175,28 @@ public class MainController implements Initializable {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Результат");
         alert.setHeaderText("К сожалению экспертная система на смогла выбрать объект!");
-        alert.setContentText("Попробуйте заного...");
-        alert.showAndWait().ifPresent(rs -> {
-            if (rs == ButtonType.OK) {
-                //TODO Reset all Attributes and rules isUsed, values and etc
-            }
-        });
+        alert.setContentText("Попробуйте заново...");
+        alert.showAndWait().ifPresent(resetConsumer);
+    }
+
+    //Объект, обрабатывающий сброс и начало новой сессии вопросов-ответов
+    Consumer resetConsumer = rs -> {
+        if (rs == ButtonType.OK) {
+            DataManager.reset();
+            currentNode = Data.DataManager.getPreferObject(DataManager.getTree());
+            processNextQuestion();
+        }
+    };
+
+    /**
+     * Выводит информацию о приложении
+     * @param actionEvent
+     */
+    public void handleAboutAppAction(ActionEvent actionEvent) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("О программе");
+        alert.setHeaderText("Эксперт по подбору книг");
+        alert.setContentText("Данная программа - лучший друг в вопросе выбора книги кому бы то ни было. Выбираете вы её для себя или для кого-то, просто так или в подарок - это не важно. Наша система поможет решить любую вашу задачу!");
+        alert.showAndWait();
     }
 }

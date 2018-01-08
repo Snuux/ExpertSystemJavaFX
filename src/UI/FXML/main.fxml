@@ -26,7 +26,7 @@
         </Menu>
         <Menu text="О программе">
             <items>
-                <MenuItem text="Лол" />
+                <MenuItem onAction="#handleAboutAppAction" text="О программе" />
                 <SeparatorMenuItem />
                 <MenuItem onAction="#handleAboutAction" text="Об авторах" />
             </items>
