@@ -17,13 +17,8 @@ public class Main extends Application {
         primaryStage.setTitle("Экспертная система: Выбор книги");
         primaryStage.setScene(new Scene(root, 300, 325));
         primaryStage.show();
+        primaryStage.setOnCloseRequest(e -> System.exit(0));
         mainStage = primaryStage;
-
-//        rulesStage = new Stage();
-//        Scene scene = new Scene(FXMLLoader.load(getClass().getResource("UI/FXML/rules.fxml")));
-//        rulesStage.setTitle("Список правил");
-//        rulesStage.setScene(scene);
-//        rulesStage.hide();
 
         questionGraphStage = new Stage();
         Scene scene1 = new Scene(FXMLLoader.load(getClass().getResource("FXML/questionGraph.fxml")));

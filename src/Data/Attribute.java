@@ -11,23 +11,10 @@ public class Attribute<T> implements Serializable{
     private ValueType valueType;
     private ArrayList<String> variantAnswers;
 
-    private boolean isEntered;
-    private boolean isTrue;
-
     public Attribute(String text, T value, Type type) {
         this.text = text;
         this.value = value;
         this.type = type;
-        this.isEntered = false;
-        this.isTrue = false;
-    }
-
-    public boolean isTrue() {
-        return isTrue;
-    }
-
-    public void setTrue(boolean aTrue) {
-        isTrue = aTrue;
     }
 
     //truefalse
@@ -49,16 +36,7 @@ public class Attribute<T> implements Serializable{
 
     public Attribute<T> setValue(T value) {
         this.value = value;
-
         return this;
-    }
-
-    public boolean isEntered() {
-        return isEntered;
-    }
-
-    public void setEntered(boolean entered) {
-        isEntered = entered;
     }
 
     public String getText() {
@@ -74,16 +52,23 @@ public class Attribute<T> implements Serializable{
     }
 
     public Attribute setType(String s) {
-        if (s == "O")
-            type = Type.OBJECT;
-        else if (s == "Q")
-            type = Type.QUESTION;
-        else if (s == "R")
-            type = Type.ROOT;
-        else if (s == "T")
-            type = Type.TEMPORARY;
-        else if (s == "A")
-            type = Type.ATTRIBUTE;
+        switch (s) {
+            case "O":
+                type = Type.OBJECT;
+                break;
+            case "Q":
+                type = Type.QUESTION;
+                break;
+            case "R":
+                type = Type.ROOT;
+                break;
+            case "T":
+                type = Type.TEMPORARY;
+                break;
+            case "A":
+                type = Type.ATTRIBUTE;
+                break;
+        }
 
         return this;
     }
@@ -99,6 +84,10 @@ public class Attribute<T> implements Serializable{
     @Override
     public String toString() {
         return text;
+    }
+
+    public boolean hasValue() {
+        return value != null;
     }
 
     public enum Type {

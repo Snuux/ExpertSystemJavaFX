@@ -11,8 +11,7 @@ public class Rule<T> implements Serializable {
     private static int count = 0;
     private String tag;
     private Operation operation;
-
-    private boolean isUsed;
+    private boolean used;
 
     public Rule(String tag, Attribute attribute, T value) {
         this.id = count++;
@@ -20,8 +19,16 @@ public class Rule<T> implements Serializable {
         this.tag = tag;
         this.attribute = attribute;
         this.value = value;
-        this.isUsed = false;
+        this.used = false;
         this.operation = NO_OP;
+    }
+
+    public boolean isEqualToAttribute() {
+        return attribute.getValue() != null && this.value.equals(attribute.getValue());
+    }
+
+    public void setValueToAttribute() {
+        attribute.setValue(value);
     }
 
     public Attribute getAttribute() {
@@ -41,11 +48,11 @@ public class Rule<T> implements Serializable {
     }
 
     public boolean isUsed() {
-        return isUsed;
+        return used;
     }
 
     public void setUsed(boolean used) {
-        this.isUsed = used;
+        this.used = used;
     }
 
     public void setOperation(Operation operation) {
@@ -54,7 +61,7 @@ public class Rule<T> implements Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        if (!obj.getClass().equals(this))
+        if (!obj.getClass().equals(this.getClass()))
             return false;
 
         return ((Rule) obj).id == id;
@@ -70,9 +77,9 @@ public class Rule<T> implements Serializable {
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(attribute.getText()).append(", ");
-        stringBuilder.append("isUsed: ").append(isUsed()).append(", ");
-        stringBuilder.append("aisTrue: ").append(getAttribute().isTrue()).append(", ");
-        stringBuilder.append("aisEntered: ").append(getAttribute().isEntered()).append(", ");
+        stringBuilder.append("ruleIsUsed: ").append(isUsed()).append(", ");
+        stringBuilder.append("atrHasValue: ").append(getAttribute().hasValue()).append(", ");
+        stringBuilder.append("equalsAtr: ").append(isEqualToAttribute()).append(", ");
         stringBuilder.append(tag).append(" == ").append(value);
 
         if (operation != null)
@@ -87,7 +94,7 @@ public class Rule<T> implements Serializable {
                     stringBuilder.append(" -- XOR");
                     break;
                 case NO_OP:
-                    //ТУТ ЗАДАЁТСЯ ВОПРОС?
+                    //Устанавливается для вопросов
                     break;
             }
 

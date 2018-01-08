@@ -38,8 +38,8 @@ public class QuestionGraphController implements Initializable {
     @FXML
     Button saveButton;
 
-    TreeItem currentTreeItemSelection;
-    ListProperty<Attribute> listProperty;
+    private TreeItem<Rule> currentTreeItemSelection;
+    private ListProperty<Attribute> listProperty;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

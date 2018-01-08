@@ -43,70 +43,64 @@ public class MainController implements Initializable {
         });
     }
 
-    TreeItem currentNode;
+    private static TreeItem currentNode;
+
+    public static TreeItem getCurrentNode() {
+        return currentNode;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        //Получаем объект, у которого меньше всего вопросов в ветке
         currentNode = Data.DataManager.getPreferObject(DataManager.getTree());
 
+        //Получаем вопрос из ветки у объекта и задаём его
         processNextQuestion();
     }
 
     private void processNextQuestion() {
-        //magic begins
+        //Получение вопроса для текущего объекта
         Rule currentRule = (Rule) DataManager.getQuestion(currentNode).getValue();
 
-        //Если объект имеет атрибут -> вывести объект .
-        //Если объект не имеет атрибут -> продолжить .
-        //Если объект не имеет атрибут и правило сработало -> сменить объект .
-        //Если ни один объект не имеет атрибут и все правила сработали -> вывести нет объекта .
-
+        //Выбор ветки графа (объекта, который будем рассматривать
         Rule rule = (Rule) currentNode.getValue();
-
-        if (rule.isUsed()) {
-            if (rule.getAttribute().isTrue()) {
-                objectSelected(currentNode);
+        if (rule.getAttribute().hasValue()) {
+            objectSelected(currentNode);
+            return;
+        } else {
+            //Ищем новый объект с минимальным деревом вопросов
+            currentNode = DataManager.getPreferObject(DataManager.getTree());
+            //Если такой объект не найден, то останавливаем работу
+            // и говорим, что в системе нет соответствующего объекта
+            if (currentNode == null) {
+                noObjectSelected();
                 return;
-            } else if (!rule.getAttribute().isTrue()) {
-                if (DataManager.checkAllObjectsUsed(DataManager.getTree())) { //all objects not true
-                    noObjectSelected();
-                    return;
-                } else {
-                    currentNode = Data.DataManager.getPreferObject(DataManager.getTree());
-                    currentRule = (Rule) DataManager.getQuestion(currentNode).getValue();
-                }
             }
         }
 
-
-        //true magic begins
-        /*Rule rule = (Rule) currentNode.getValue();
-        if (rule.getAttribute().isEntered() || (!rule.getAttribute().isEntered() && rule.getAttribute().getValue() == null)) {
-            if (DataManager.checkAllObjectsExistsDontKnow(DataManager.getTree())) {
-                noObjectSelected();
-                return;
-            } else
-                currentNode = Data.DataManager.getPreferObject(DataManager.getTree());
-
-        } else if (rule.getAttribute().isEntered() && rule.getAttribute().getValue() != null) {
-            objectSelected(currentNode);
+        //Получив вопрос, показываем его
+        if (!currentRule.getTag().equals("EMPTY")) {
+            showQuestion(currentRule);
+        } else {
+            noObjectSelected();
             return;
-        }*/
-
-
-        showQuestion(currentRule);
+        }
     }
 
     private void showQuestion(Rule rule) {
+        //Получаем текст вопроса из атрибута
         questionLabel.setText(rule.getAttribute().getText());
 
+        //Удаляем все кнопки из контейнера с кнопками
         buttonsBox.getChildren().clear();
-        if (rule.getAttribute().getType() == Attribute.Type.QUESTION) {
-            if (rule.getAttribute().getValueType() == Attribute.ValueType.TRUE_FALSE || rule.getAttribute().getValueType() == Attribute.ValueType.TRUE_FALSE_DONT_KNOW) {
 
+        //В зависимости от типа вопроса добавляем разные виды кнопок:
+        if (rule.getAttribute().getType() == Attribute.Type.QUESTION) {
+            if (rule.getAttribute().getValueType() == Attribute.ValueType.TRUE_FALSE ||
+                    rule.getAttribute().getValueType() == Attribute.ValueType.TRUE_FALSE_DONT_KNOW) {
                 Button button1 = new Button("Да");
                 button1.setOnAction(e -> {
-                    rule.getAttribute().setEntered(true);
+                    rule.setUsed(true);
                     rule.getAttribute().setValue(1);
                     processNextQuestion();
                 });
@@ -114,7 +108,7 @@ public class MainController implements Initializable {
 
                 Button button2 = new Button("Нет");
                 button2.setOnAction(e -> {
-                    rule.getAttribute().setEntered(true);
+                    rule.setUsed(true);
                     rule.getAttribute().setValue(0);
                     processNextQuestion();
                 });
@@ -150,15 +144,21 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    public void handleExitMenuItem(ActionEvent actionEvent) {
+    public void handleExitMenuItem(ActionEvent actionEvent) { //Выход из приложения по нажатию кнопки закрыть
         System.exit(0);
     }
 
     @FXML
-    public void handleShowAllObjectsGraph(ActionEvent actionEvent) {
+    public void handleShowAllObjectsGraph(ActionEvent actionEvent) { //Отображение графа правил
         Main.getQuestionGraphStage().show();
     }
 
+    /**
+     * Метод, завершающий работу ЭС при нахождении нужного объекта
+     * Показывает Alert с информацией о результате работы системы
+     *
+     * @param node узел, в котором содержится отработавшее правило и найденный объект
+     */
     private void objectSelected(TreeItem node) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Результат");
@@ -171,6 +171,10 @@ public class MainController implements Initializable {
         });
     }
 
+    /**
+     * Метод, завершающий работу ЭС при отсутствии нужного объекта
+     * Показывает Alert с информацией о результате работы системы
+     */
     private void noObjectSelected() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Результат");
