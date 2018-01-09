@@ -7,7 +7,7 @@
 <?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.Controller.QuestionGraphController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.Controller.QuestionGraphFormController">
    <children>
       <TreeView fx:id="treeView" layoutX="14.0" layoutY="14.0" onMouseClicked="#onTreeViewClickedHandle" prefHeight="372.0" prefWidth="389.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="14.0" />
       <Button fx:id="closeGraphButton" layoutX="510.0" layoutY="361.0" mnemonicParsing="false" onAction="#handleCloseGraphButton" prefWidth="76.0" text="Закрыть" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
@@ -18,12 +18,9 @@
             <Label layoutX="15.0" layoutY="113.0" text="Значение:" />
             <ComboBox fx:id="attributeComboBox" layoutX="15.0" layoutY="76.0" prefHeight="25.0" prefWidth="95.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" />
             <TextField fx:id="tagField" layoutX="42.0" layoutY="10.0" prefHeight="25.0" prefWidth="67.0" AnchorPane.leftAnchor="42.0" AnchorPane.rightAnchor="14.0" />
-            <Button fx:id="saveButton" layoutX="14.0" layoutY="244.0" mnemonicParsing="false" text="Сохранить" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" />
             <ComboBox fx:id="valueComboBox" editable="true" layoutX="15.0" layoutY="139.0" prefHeight="25.0" prefWidth="95.0" />
             <Label layoutX="15.0" layoutY="178.0" text="Операция:" />
             <ComboBox fx:id="operationComboBox" editable="true" layoutX="15.0" layoutY="204.0" prefHeight="25.0" prefWidth="95.0" />
-            <Button fx:id="attributePlusButton" layoutX="86.0" layoutY="47.0" mnemonicParsing="false" onAction="#attributePlusOnAction" text="+" />
-            <Button fx:id="valuePlusButton" layoutX="86.0" layoutY="109.0" mnemonicParsing="false" onAction="#valuePlusOnAction" text="+" />
          </children>
       </AnchorPane>
    </children>

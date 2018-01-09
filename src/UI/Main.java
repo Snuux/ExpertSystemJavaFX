@@ -13,7 +13,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("FXML/main.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("FXML/mainForm.fxml"));
         primaryStage.setTitle("Экспертная система: Выбор книги");
         primaryStage.setScene(new Scene(root, 300, 325));
         primaryStage.show();
@@ -21,7 +21,7 @@ public class Main extends Application {
         mainStage = primaryStage;
 
         questionGraphStage = new Stage();
-        Scene scene1 = new Scene(FXMLLoader.load(getClass().getResource("FXML/questionGraph.fxml")));
+        Scene scene1 = new Scene(FXMLLoader.load(getClass().getResource("FXML/questionsGraphForm.fxml")));
         questionGraphStage.setTitle("Дерево правил");
         questionGraphStage.setScene(scene1);
     }

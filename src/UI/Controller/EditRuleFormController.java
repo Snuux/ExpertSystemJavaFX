@@ -3,7 +3,6 @@ package UI.Controller;
 import Data.Attribute;
 import Data.DataManager;
 import Data.Rule;
-import UI.UIUtilities;
 import javafx.application.Platform;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
@@ -13,7 +12,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Pair;
@@ -22,11 +20,7 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class QuestionGraphController implements Initializable {
-    @FXML
-    public Button closeGraphButton;
-    @FXML
-    TreeView treeView;
+public class EditRuleFormController implements Initializable{
     @FXML
     ComboBox attributeComboBox;
     @FXML
@@ -37,16 +31,26 @@ public class QuestionGraphController implements Initializable {
     TextField tagField;
     @FXML
     Button saveButton;
+    @FXML
+    Button cancelButton;
 
-    private TreeItem<Rule> currentTreeItemSelection;
     private ListProperty<Attribute> listProperty;
+    private TreeItem<Rule> currentTreeItemSelection;
+    private boolean isAdd;
+
+    public void setCurrentTreeItemSelection(TreeItem<Rule> currentTreeItemSelection, boolean isAdd) {
+        this.currentTreeItemSelection = currentTreeItemSelection;
+
+        Rule it = currentTreeItemSelection.getValue();
+
+        tagField.setText(           it.getTag());
+        attributeComboBox.setValue( it.getAttribute().getText());
+        valueComboBox.setValue(     it.getValue());
+        operationComboBox.setValue( it.getOperation());
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        treeView.setRoot(Data.DataManager.getTree());
-        currentTreeItemSelection = Data.DataManager.getTree();
-        createContextMenu(Data.DataManager.getTree());
-
         listProperty = new SimpleListProperty<>();
 
         attributeComboBox.itemsProperty().bind(listProperty);
@@ -56,47 +60,6 @@ public class QuestionGraphController implements Initializable {
                         attributeComboBox.getTooltip().setText(newValue.toString())
         );
         listProperty.set(FXCollections.observableArrayList(DataManager.getAttributes()));
-
-        //Настройка ComboBox со значениями
-        valueComboBox.setTooltip(new Tooltip());
-        valueComboBox.getSelectionModel().selectedItemProperty().addListener(
-                (observable,oldValue,newValue) ->
-                    valueComboBox.getTooltip().setText(newValue.toString())
-                );
-
-        UIUtilities.updateTooltipBehavior(0, 999999,0,true);
-    }
-
-    private void createContextMenu(TreeItem iRoot){
-        MenuItem entry1 = new MenuItem("Добавить правило");
-        MenuItem entry2 = new MenuItem("Исправить правило");
-        MenuItem entry3 = new MenuItem("Удалить правило");
-
-        entry1.setOnAction(ae -> {
-            //System.out.println(((Rule)getTreeViewSelection().getValue()).getTag());
-        });
-
-        treeView.setContextMenu(new ContextMenu(entry1, entry2, entry3));
-    }
-
-    public void onTreeViewClickedHandle(MouseEvent mouseEvent) {
-        if (currentTreeItemSelection == null)
-            return;
-
-        TreeItem selectedItem = (TreeItem)treeView.getSelectionModel().getSelectedItem();
-
-        if (selectedItem == null)
-            return;
-
-        if (!currentTreeItemSelection.equals(selectedItem)) {
-            currentTreeItemSelection = selectedItem;
-            Rule it = (Rule) selectedItem.getValue();
-
-            tagField.setText(it.getTag());
-            attributeComboBox.setValue(it.getAttribute().getText());
-            valueComboBox.setValue(it.getValue());
-            operationComboBox.setValue(it.getOperation());
-        }
     }
 
     public void attributePlusOnAction(ActionEvent actionEvent) {
@@ -143,17 +106,32 @@ public class QuestionGraphController implements Initializable {
 
                 listProperty.set(FXCollections.observableArrayList(DataManager.getAttributes()));
                 attributeComboBox.setValue(attributeComboBox.getItems().get(attributeComboBox.getItems().size()-1)); //hack
-
             }
         });
     }
 
     public void valuePlusOnAction(ActionEvent actionEvent) {
-
     }
 
-    public void handleCloseGraphButton(ActionEvent actionEvent) {
-        Stage stage = (Stage) closeGraphButton.getScene().getWindow();
-        stage.hide();
+    public void cancelButtonOnAction(ActionEvent actionEvent) {
+        Stage stage = (Stage) cancelButton.getScene().getWindow();
+        stage.close();
+    }
+
+    public void saveButtonOnAction(ActionEvent actionEvent) {
+
+        String tag = tagField.getText();
+        String atr = (String) attributeComboBox.getValue();
+        Rule.Operation op = (Rule.Operation) operationComboBox.getValue();
+        Object value = valueComboBox.getValue();
+
+        if (isAdd) { //если добавляем элемент
+
+        } else {     //если изменяем текущий
+
+        }
+
+        currentTreeItemSelection.getParent().getChildren()
+                .removeIf(ruleTreeItem -> ruleTreeItem.equals(currentTreeItemSelection));
     }
 }

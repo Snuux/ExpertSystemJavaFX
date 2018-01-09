@@ -14,7 +14,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
-public class MainController implements Initializable {
+public class MainFormController implements Initializable {
 
     @FXML
     private MenuBar menuBar;

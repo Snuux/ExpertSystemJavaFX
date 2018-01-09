@@ -2,9 +2,7 @@ package Data;
 
 import Data.Serialization.FileSerialization;
 import Data.Serialization.Tree;
-import UI.Controller.MainController;
 import javafx.scene.control.TreeItem;
-import org.w3c.dom.Attr;
 
 import java.util.ArrayList;
 
@@ -86,7 +84,7 @@ public class DataManager {
                 q101, q102, q111, q112, q121, q122, q131, q132, q141, q142, q151, q152, q161, q162, q171, q172,
                 q181, q182, q191, q192, q201, q202, q211, q212, o, a1, a2, a3, a4, a5, a6, a7, a8, a9);
 
-        TreeItem<Rule> R = new TreeItem<>(new Rule<>("ROOT", r, null));
+        TreeItem<Rule> R = new TreeItem<>(new Rule<>("ROOT", r, "Корень"));
         tree = R;
 
         addRule(R, null, new Rule<>("O1", o, "Властелин колец	"));
@@ -242,6 +240,7 @@ public class DataManager {
 
         return result;
     }
+
 
     /**
      * Return node with specific text from node.

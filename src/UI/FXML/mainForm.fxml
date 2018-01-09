@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 
-<VBox id="mainBox" alignment="TOP_CENTER" spacing="4" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.Controller.MainController">
+<VBox id="mainBox" alignment="TOP_CENTER" spacing="4" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.Controller.MainFormController">
     <MenuBar id="menuBar"> <!--onKeyPressed="#handleKeyInput"-->
         <Menu text="Файл">
             <items>
@@ -35,7 +35,7 @@
 
     <VBox fx:id="questionBox" alignment="TOP_CENTER" spacing="4">
         <children>
-            <Label fx:id="questionLabel" alignment="CENTER" contentDisplay="CENTER" text="Вопрос:" textAlignment="CENTER" />
+            <Label fx:id="questionLabelLol" alignment="CENTER" contentDisplay="CENTER" text="Вопрос:" textAlignment="CENTER" />
 
             <Label fx:id="questionLabel" alignment="CENTER" text="Текст вопроса?" textAlignment="CENTER">
                 <VBox.margin>
