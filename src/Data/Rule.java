@@ -40,12 +40,24 @@ public class Rule<T> implements Serializable {
         return attribute;
     }
 
+    public void setAttribute(Attribute attribute) {
+        this.attribute = attribute;
+    }
+
     public T getValue() {
         return value;
     }
 
+    public void setValue(T value) {
+        this.value = value;
+    }
+
     public Operation getOperation() {
         return operation;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 
     public String getTag() {
@@ -62,6 +74,20 @@ public class Rule<T> implements Serializable {
 
     public void setOperation(Operation operation) {
         this.operation = operation;
+    }
+
+    public void setOperation(String operation) {
+        switch (operation.toUpperCase()) {
+            case "AND":
+                this.operation = Operation.AND;
+                break;
+            case "OR":
+                this.operation = Operation.OR;
+                break;
+            case "NO_OP":
+                this.operation = Operation.NO_OP;
+                break;
+        }
     }
 
     @Override

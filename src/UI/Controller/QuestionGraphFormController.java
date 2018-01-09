@@ -30,7 +30,7 @@ public class QuestionGraphFormController implements Initializable {
     @FXML
     public Button closeGraphButton;
     @FXML
-    TreeView treeView;
+    TreeView<Rule> treeView;
     @FXML
     ComboBox attributeComboBox;
     @FXML
@@ -61,6 +61,10 @@ public class QuestionGraphFormController implements Initializable {
         UIUtilities.updateTooltipBehavior(0, 999999, 0, true);
     }
 
+    public void updateTree() {
+        treeView.refresh();
+    }
+
 
     public TreeItem<Rule> getCurrentTreeItemSelection() {
         return currentTreeItemSelection;
@@ -74,12 +78,12 @@ public class QuestionGraphFormController implements Initializable {
         entry1.setOnAction(ae -> {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/UI/FXML/editRuleForm.fxml"));
-                Parent root1 = (Parent) fxmlLoader.load();
+                Parent root1 = fxmlLoader.load();
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root1));
                 stage.show();
 
-                ((EditRuleFormController) fxmlLoader.getController()).setCurrentTreeItemSelection(currentTreeItemSelection, true);
+                ((EditRuleFormController) fxmlLoader.getController()).setCurrentTreeItemSelection(currentTreeItemSelection, EditRuleFormController.EditType.ADD, this);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -89,12 +93,12 @@ public class QuestionGraphFormController implements Initializable {
         entry2.setOnAction(ae -> {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../FXML/editRuleForm.fxml"));
-                Parent root1 = (Parent) fxmlLoader.load();
+                Parent root1 = fxmlLoader.load();
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root1));
                 stage.show();
 
-                ((EditRuleFormController) fxmlLoader.getController()).setCurrentTreeItemSelection(currentTreeItemSelection, false);
+                ((EditRuleFormController) fxmlLoader.getController()).setCurrentTreeItemSelection(currentTreeItemSelection, EditRuleFormController.EditType.CHANGE, this);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -103,8 +107,9 @@ public class QuestionGraphFormController implements Initializable {
 
         entry3.setOnAction(ae -> {
             if (currentTreeItemSelection.getValue().getAttribute().getType() != Attribute.Type.ROOT) {
-                currentTreeItemSelection.getParent().getChildren()
-                        .removeIf(ruleTreeItem -> ruleTreeItem.equals(currentTreeItemSelection));
+                currentTreeItemSelection.getParent()
+                                        .getChildren()
+                                        .removeIf(ruleTreeItem -> ruleTreeItem.equals(currentTreeItemSelection));
             }
         });
 
@@ -115,19 +120,19 @@ public class QuestionGraphFormController implements Initializable {
         if (currentTreeItemSelection == null)
             return;
 
-        TreeItem selectedItem = (TreeItem) treeView.getSelectionModel().getSelectedItem();
+        TreeItem<Rule> selectedItem = treeView.getSelectionModel().getSelectedItem();
 
         if (selectedItem == null)
             return;
 
         if (!currentTreeItemSelection.equals(selectedItem)) {
             currentTreeItemSelection = selectedItem;
-            Rule it = (Rule) selectedItem.getValue();
+            Rule selectedItemRule = selectedItem.getValue();
 
-            tagField.setText(it.getTag());
-            attributeComboBox.setValue(it.getAttribute().getText());
-            valueComboBox.setValue(it.getValue());
-            operationComboBox.setValue(it.getOperation());
+            tagField.setText(selectedItemRule.getTag());
+            attributeComboBox.setValue(selectedItemRule.getAttribute().getText());
+            valueComboBox.setValue(selectedItemRule.getValue());
+            operationComboBox.setValue(selectedItemRule.getOperation());
         }
     }
 

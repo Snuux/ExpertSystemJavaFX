@@ -5,6 +5,7 @@ import Data.Serialization.Tree;
 import javafx.scene.control.TreeItem;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class DataManager {
     private static TreeItem<Rule> tree;
@@ -16,12 +17,10 @@ public class DataManager {
     }
 
     private static void addAllAttributes(Attribute... atrs) {
-        for (Attribute a : atrs) {
-            attributes.add(a);
-        }
+        Collections.addAll(attributes, atrs);
     }
 
-    public static void saveBase() {
+    private static void saveBase() {
         Attribute<Boolean> r = new Attribute<>("Корень дерева", null, Attribute.Type.ROOT);
 
         Attribute<String>  a1   = new Attribute<>("Жанр", null, Attribute.Type.ATTRIBUTE);
@@ -209,7 +208,7 @@ public class DataManager {
     }
 
     public static void load() {
-        attributes = new ArrayList();
+        attributes = new ArrayList<>();
         attributes = FileSerialization.deserialize("save/Attributes");
 
         Tree treeDeser = FileSerialization.treeDeserialize("TreeSer");
@@ -220,7 +219,7 @@ public class DataManager {
                 r = a;
             }
         }
-        tree = new TreeItem(new Rule("ROOT", r, null));
+        tree = new TreeItem<>(new Rule("ROOT", r, null));
 
         FileSerialization.copyTree(treeDeser.getRoot(), tree);
     }

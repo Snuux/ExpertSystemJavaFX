@@ -84,7 +84,6 @@ public class MainFormController implements Initializable {
             showQuestion(currentRule);
         } else {
             noObjectSelected();
-            return;
         }
     }
 
@@ -180,7 +179,7 @@ public class MainFormController implements Initializable {
     }
 
     //Объект, обрабатывающий сброс и начало новой сессии вопросов-ответов
-    Consumer resetConsumer = rs -> {
+    private Consumer resetConsumer = rs -> {
         if (rs == ButtonType.OK) {
             DataManager.reset();
             currentNode = Data.DataManager.getPreferObject(DataManager.getTree());
