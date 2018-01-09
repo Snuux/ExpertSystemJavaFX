@@ -14,8 +14,11 @@
     <MenuBar id="menuBar"> <!--onKeyPressed="#handleKeyInput"-->
         <Menu text="Файл">
             <items>
-                <MenuItem text="Подключиться к БД" />
+                <MenuItem fx:id="loadMenuItem" onAction="#loadMenuOnAction" text="Загрузить базу знаний" />
+            <MenuItem fx:id="saveMenuItem" onAction="#saveMenuOnAction" text="Сохранить базу знаний" />
                 <SeparatorMenuItem />
+            <MenuItem fx:id="loadDefaultMenuItem" onAction="#loadDefaultMenuOnAction" text="Загрузить базу по умолчанию" />
+            <SeparatorMenuItem />
                 <MenuItem fx:id="exitMenuItem" onAction="#handleExitMenuItem" text="Выход" />
             </items>
         </Menu>

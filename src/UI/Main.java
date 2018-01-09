@@ -1,6 +1,7 @@
 package UI;
 
 import Data.*;
+import UI.Controller.QuestionGraphFormController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,6 +11,8 @@ import javafx.stage.Stage;
 public class Main extends Application {
     private static Stage mainStage;
     private static Stage questionGraphStage;
+
+    private static QuestionGraphFormController questionGraphFormController;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -21,7 +24,11 @@ public class Main extends Application {
         mainStage = primaryStage;
 
         questionGraphStage = new Stage();
-        Scene scene1 = new Scene(FXMLLoader.load(getClass().getResource("FXML/questionsGraphForm.fxml")));
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML/questionsGraphForm.fxml"));
+        Scene scene1 = new Scene(loader.load());
+
+        questionGraphFormController = loader.getController();
         questionGraphStage.setTitle("Дерево правил");
         questionGraphStage.setScene(scene1);
     }
@@ -34,8 +41,12 @@ public class Main extends Application {
         return questionGraphStage;
     }
 
+    public static QuestionGraphFormController getQuestionGraphFormController() {
+        return questionGraphFormController;
+    }
+
     public static void main(String[] args) {
-       DataManager.test();
+       //DataManager.test();
        launch(args);
     }
 }

@@ -3,14 +3,13 @@ package UI.Controller;
 import Data.Attribute;
 import Data.DataManager;
 import Data.Rule;
-import UI.Main;
 import javafx.application.Platform;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -19,7 +18,9 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
+import javax.xml.soap.Text;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -38,8 +39,11 @@ public class EditRuleFormController implements Initializable{
     Button saveButton;
     @FXML
     Button cancelButton;
+    @FXML
+    TextField parentField;
 
-    private ListProperty<Attribute> listProperty;
+    private ListProperty<Attribute> attributeListProperty;
+    private ListProperty<String> valueListProperty;
     private TreeItem<Rule> currentTreeItemSelection;
     private EditType type;
     private QuestionGraphFormController controller;
@@ -52,14 +56,26 @@ public class EditRuleFormController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //Настройка связывания комбобоксов с уже имеющимися объектами
-        listProperty = new SimpleListProperty<>();
+        attributeListProperty = new SimpleListProperty<>();
 
-        attributeComboBox.itemsProperty().bind(listProperty);
-        attributeComboBox.setTooltip(new Tooltip());
-        attributeComboBox.getSelectionModel().selectedItemProperty().addListener(
-                (observable,oldValue,newValue) -> attributeComboBox.getTooltip().setText(newValue.toString())
-        );
-        listProperty.set(FXCollections.observableArrayList(DataManager.getAttributes()));
+        attributeComboBox.itemsProperty().bind(attributeListProperty);
+        //attributeComboBox.setTooltip(new Tooltip());
+        //attributeComboBox.getSelectionModel().selectedItemProperty().addListener(
+        //        (observable,oldValue,newValue) -> attributeComboBox.getTooltip().setText(newValue.toString())
+        //);
+        attributeListProperty.set(FXCollections.observableArrayList(DataManager.getAttributes()));
+
+        //Настройка связывания комбобоксов с уже имеющимися объектами
+        valueListProperty = new SimpleListProperty<>();
+
+        valueComboBox.itemsProperty().bind(valueListProperty);
+        //valueComboBox.setTooltip(new Tooltip());
+        //valueComboBox.getSelectionModel().selectedItemProperty().addListener(
+        //        (observable,oldValue,newValue) -> valueComboBox.getTooltip().setText(newValue.toString())
+        //);
+        valueListProperty.set(FXCollections.observableArrayList(DataManager.getValues()));
+
+
 
         operationComboBox.getItems().addAll(Rule.Operation.AND, Rule.Operation.OR, Rule.Operation.NO_OP);
         //operationComboBox.getItems().add(Rule.Operation.XOR); - раскомментировать при добавлении соответствующего правила
@@ -76,6 +92,9 @@ public class EditRuleFormController implements Initializable{
         currentTreeItemSelection = node;
         type = editType;
         this.controller = controller;
+        parentField.setText(currentTreeItemSelection.getValue().getAttribute().getText()
+                            + ", " + currentTreeItemSelection.getValue().getTag() + " == "
+                            + currentTreeItemSelection.getValue().getValue());
 
         //Если тип операции - изменение, то
         //получаем правило из объекта и выводим его в интерфейс
@@ -86,6 +105,8 @@ public class EditRuleFormController implements Initializable{
             valueComboBox.setValue(currentRule.getValue());
             operationComboBox.setValue(currentRule.getOperation());
         }
+
+        parentField.setFocusTraversable(false);
     }
 
     /**
@@ -93,7 +114,6 @@ public class EditRuleFormController implements Initializable{
      * @param actionEvent - событие, передаваемое по нажатию по кнопке
      */
     public void attributePlusOnAction(ActionEvent actionEvent) {
-        //Создаём модальное диалоговое окно
         Dialog<Pair<String, String>> dialog = new Dialog<>();
         dialog.setTitle("Добавление атрибута");
         dialog.setHeaderText("Добавьте атрибут и выберите тип");
@@ -132,9 +152,11 @@ public class EditRuleFormController implements Initializable{
         result.ifPresent(attributeParameters -> {
             if (result.get() != null) {
                 Pair<String, String> p = result.get();
-                DataManager.getAttributes().add(new Attribute(p.getKey(), null, null).setType(p.getValue()));
+                Attribute attribute = new Attribute(p.getKey(), null, null).setType(p.getValue());
+                attribute.setValueType(Attribute.ValueType.TRUE_FALSE);
+                DataManager.getAttributes().add(attribute);
 
-                listProperty.set(FXCollections.observableArrayList(DataManager.getAttributes()));
+                attributeListProperty.set(FXCollections.observableArrayList(DataManager.getAttributes()));
                 attributeComboBox.setValue(attributeComboBox.getItems().get(attributeComboBox.getItems().size()-1)); //hack
             }
         });
@@ -145,7 +167,19 @@ public class EditRuleFormController implements Initializable{
      * @param actionEvent - событие, передаваемое по нажатию по кнопке
      */
     public void valuePlusOnAction(ActionEvent actionEvent) {
-        //TODO Доработать функционал кнопки добавления новых значений
+        TextInputDialog dialog = new TextInputDialog("значение...");
+        dialog.setTitle("Добавление значения");
+        dialog.setHeaderText("Добавьте значение");
+        dialog.setContentText("Значение:");
+
+        Optional<String> result = dialog.showAndWait();
+
+        result.ifPresent(name -> {
+            DataManager.getValues().add(result.get().toString());
+
+            valueListProperty.set(FXCollections.observableArrayList(DataManager.getValues()));
+            valueComboBox.setValue(valueComboBox.getItems().get(valueComboBox.getItems().size()-1)); //hack
+        });
     }
 
     /**
@@ -164,23 +198,59 @@ public class EditRuleFormController implements Initializable{
     public void saveButtonOnAction(ActionEvent actionEvent) {
         //Получаем значения введённые пользователем в интерфейс
         String tag = tagField.getText();
-        String attribute = (String) attributeComboBox.getValue();
+        String attribute = attributeComboBox.getValue().toString();
         String operation = operationComboBox.getValue().toString();
         Object value = valueComboBox.getValue();
 
         //Если выбрана операция добавления, то в текущий узел добавляем новое правило
         if (type == EditType.ADD) {
             //TODO добавление нового правила в текущий узел
+
+            Rule rule = null;
+
+            //Конвертирование "Да" в 1, "Нет" в 0, "Не знаю" в -1
+            switch ((value.toString())) {
+                case "Да":
+                    rule = new Rule<>(tag, DataManager.getAttributeByName(attribute), 1, operation);
+                    break;
+                case "Нет":
+                    rule = new Rule<>(tag, DataManager.getAttributeByName(attribute), 0, operation);
+                    break;
+                case "Не знаю":
+                    rule = new Rule<>(tag, DataManager.getAttributeByName(attribute), -1, operation);
+                    break;
+                default:
+                    rule = new Rule<>(tag, DataManager.getAttributeByName(attribute), value, operation);
+                    break;
+            }
+
+            TreeItem newTreeItem = new TreeItem<>(rule);
+            currentTreeItemSelection.getChildren().add(newTreeItem);
         } //Если выбрана операция изменения, то изменяем текущий узел
         else if (type == EditType.CHANGE) {
             Rule currentRule = currentTreeItemSelection.getValue();
             currentRule.setTag(tag);
-            //currentRule.setAttribute(attribute); //TODO Доработать добавление атрибута
+            currentRule.setAttribute(DataManager.getAttributeByName(attribute)); //TODO Доработать добавление атрибута
             //Сейчас из интерфейса мы получаем строку
             // необходимо по описанию находить атрибут в списке атрибутов и использовать его
             // если такового нет, то добавлять новый атрибут в DataManager.attributes
             currentRule.setOperation(operation);
-            currentRule.setValue(value);
+
+            switch ((value.toString())) {
+                case "Да":
+                    currentRule.setValue(1);
+                    break;
+                case "Нет":
+                    currentRule.setValue(0);
+                    break;
+                case "Не знаю":
+                    currentRule.setValue(-1);
+                    break;
+                default:
+                    currentRule.setValue(value);
+                    break;
+            }
+
         }
         controller.updateTree();
         cancelButtonOnAction(actionEvent);

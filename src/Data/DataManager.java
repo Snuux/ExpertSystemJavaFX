@@ -1,26 +1,49 @@
 package Data;
 
 import Data.Serialization.FileSerialization;
+import Data.Serialization.Node;
 import Data.Serialization.Tree;
 import javafx.scene.control.TreeItem;
-
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 public class DataManager {
     private static TreeItem<Rule> tree;
     private static ArrayList<Attribute> attributes;
+    private static ArrayList<String> values;
 
     public static void test() {
-        saveBase();
+        //defaultBase();
         //load();
+    }
+
+    public static ArrayList<String> getValues() {
+        return values;
     }
 
     private static void addAllAttributes(Attribute... atrs) {
         Collections.addAll(attributes, atrs);
     }
 
-    private static void saveBase() {
+    public static void defaultBase() {
+
+        values = new ArrayList<>();
+        values.addAll(Arrays.asList("Да", "Нет", "Не знаю",
+                "Корень",
+                "Властелин колец",
+                "Гарри Поттер",
+                "Тихий Дон",
+                "Евгений Онегин",
+                "Искусство войны",
+                "Фауст",
+                "Как доводить дела до конца",
+                "Как завоевывть друзей",
+                "Донцова",
+                "Сумерки",
+                "Чистый код",
+                "Лекции по высшей математике"));
+
         Attribute<Boolean> r = new Attribute<>("Корень дерева", null, Attribute.Type.ROOT);
 
         Attribute<String>  a1   = new Attribute<>("Жанр", null, Attribute.Type.ATTRIBUTE);
@@ -79,20 +102,20 @@ public class DataManager {
         Attribute<String> o = new Attribute<>("Объект", null, Attribute.Type.OBJECT);
 
         attributes = new ArrayList<>();
-        addAllAttributes(r, q11, q12, q21, q22, q31, q32, q41, q42, q51, q52, q61, q62, q71, q72, q81, q82, q91, q92,
+        addAllAttributes(o, a1, a2, a3, a4, a5, a6, a7, a8, a9, q11, q12, q21, q22, q31, q32, q41, q42, q51, q52, q61, q62, q71, q72, q81, q82, q91, q92,
                 q101, q102, q111, q112, q121, q122, q131, q132, q141, q142, q151, q152, q161, q162, q171, q172,
-                q181, q182, q191, q192, q201, q202, q211, q212, o, a1, a2, a3, a4, a5, a6, a7, a8, a9);
+                q181, q182, q191, q192, q201, q202, q211, q212, r);
 
         TreeItem<Rule> R = new TreeItem<>(new Rule<>("ROOT", r, "Корень"));
         tree = R;
 
-        addRule(R, null, new Rule<>("O1", o, "Властелин колец	"));
-        addRule(R, null, new Rule<>("O2", o, "Гарри Поттер"));
+        addRule(R, null, new Rule<>("O1", o, "Властелин колец"));
+        addRule(R, null, new Rule<>("O2", o, "Гарри Поттер" ));
         addRule(R, null, new Rule<>("O3", o, "Тихий Дон"));
         addRule(R, null, new Rule<>("O4", o, "Евгений Онегин"));
         addRule(R, null, new Rule<>("O5", o, "Искусство войны"));
         //addRule(R, null, new Rule("O6", o, "Фауст"));
-        //addRule(R, null, new Rule("O7", o, "Как доводить дела до цонца"));
+        //addRule(R, null, new Rule("O7", o, "Как доводить дела до конца"));
         //addRule(R, null, new Rule("O8", o, "Как завоевывть друзей"));
         //addRule(R, null, new Rule("O9", o, "Донцова"));
         //addRule(R, null, new Rule("O10", o, "Сумерки"));
@@ -204,14 +227,17 @@ public class DataManager {
         addRule(getNodeFromNodeWithTag(O5, "A8"), Rule.Operation.AND, new Rule<>("Q191", q191, 1), new Rule<>("Q192", q192, 1));
         addRule(getNodeFromNodeWithTag(O5, "A9"), Rule.Operation.AND, new Rule<>("Q201", q201, 1), new Rule<>("Q202", q202, 1));
 
-        //FileSerialization.<ArrayList>serialize(attributes, "save/Attributes");
+
     }
 
-    public static void load() {
+    public static void load(String filename) {
         attributes = new ArrayList<>();
-        attributes = FileSerialization.deserialize("save/Attributes");
+        attributes = FileSerialization.deserialize(filename + "/Attributes");
 
-        Tree treeDeser = FileSerialization.treeDeserialize("TreeSer");
+        values = new ArrayList<>();
+        values = FileSerialization.deserialize(filename + "/Values");
+
+        Tree treeDeser = FileSerialization.treeDeserialize(filename);
 
         Attribute r = null;
         for (Attribute a : attributes) {
@@ -222,6 +248,15 @@ public class DataManager {
         tree = new TreeItem<>(new Rule("ROOT", r, null));
 
         FileSerialization.copyTree(treeDeser.getRoot(), tree);
+    }
+
+    public static void save(String filename) {
+        FileSerialization.<ArrayList>serialize(attributes, filename + "/Attributes");
+        FileSerialization.<ArrayList>serialize(values, filename + "/Values");
+
+        Tree treeSer = new Tree(new Node(new Rule<Boolean>("ROOT", tree.getValue().getAttribute(), null)));
+        FileSerialization.copyTree(tree, treeSer.getRoot());
+        FileSerialization.treeSerialize(treeSer.getRoot(), filename + "/TreeSer");
     }
 
     /**
@@ -238,6 +273,14 @@ public class DataManager {
             result.getChildren().add(new TreeItem<>(i));
 
         return result;
+    }
+
+    public static Attribute getAttributeByName(String text) {
+        for (Attribute a : attributes)
+            if (a.getText() == text)
+                return a;
+
+        return null;
     }
 
 

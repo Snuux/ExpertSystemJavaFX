@@ -23,6 +23,17 @@ public class Rule<T> implements Serializable {
         this.operation = NO_OP;
     }
 
+    public Rule(String tag, Attribute attribute, T value, String operationString) {
+        this.id = count++;
+
+        this.tag = tag;
+        this.attribute = attribute;
+        this.value = value;
+        this.used = false;
+        //this.operation = operation;
+        setOperation(operationString);
+    }
+
     public boolean isEqualToAttribute() {
         return attribute.getValue() != null && this.value.equals(attribute.getValue());
     }
@@ -107,11 +118,12 @@ public class Rule<T> implements Serializable {
 
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(tag).append(" == ").append(value).append(", ");
         stringBuilder.append(attribute.getText()).append(", ");
-        stringBuilder.append("ruleIsUsed: ").append(isUsed()).append(", ");
-        stringBuilder.append("atrHasValue: ").append(getAttribute().hasValue()).append(", ");
-        stringBuilder.append("equalsAtr: ").append(isEqualToAttribute()).append(", ");
-        stringBuilder.append(tag).append(" == ").append(value);
+        stringBuilder.append("ruleIsUsed: ").append(isUsed());
+        //stringBuilder.append("atrHasValue: ").append(getAttribute().hasValue()).append(", ");
+        //stringBuilder.append("equalsAtr: ").append(isEqualToAttribute()).append(", ");
+        //stringBuilder.append(tag).append(" == ").append(value);
 
         if (operation != null)
             switch (operation) {

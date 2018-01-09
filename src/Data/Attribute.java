@@ -34,9 +34,12 @@ public class Attribute<T> implements Serializable{
         this.variantAnswers.addAll(Arrays.asList(variantAnswers));
     }
 
-    public Attribute<T> setValue(T value) {
+    public void setValue(T value) {
         this.value = value;
-        return this;
+    }
+
+    public void setValueType(ValueType valueType) {
+        this.valueType = valueType;
     }
 
     public String getText() {

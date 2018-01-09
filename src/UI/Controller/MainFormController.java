@@ -6,16 +6,20 @@ import Data.Rule;
 import UI.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+import javafx.stage.DirectoryChooser;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
 public class MainFormController implements Initializable {
-
     @FXML
     private MenuBar menuBar;
 
@@ -52,11 +56,17 @@ public class MainFormController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //Получаем объект, у которого меньше всего вопросов в ветке
-        currentNode = Data.DataManager.getPreferObject(DataManager.getTree());
+        init();
+    }
 
-        //Получаем вопрос из ветки у объекта и задаём его
-        processNextQuestion();
+    private void init() {
+        if (DataManager.getTree() != null) {
+            //Получаем объект, у которого меньше всего вопросов в ветке
+            currentNode = Data.DataManager.getPreferObject(DataManager.getTree());
+
+            //Получаем вопрос из ветки у объекта и задаём его
+            processNextQuestion();
+        }
     }
 
     private void processNextQuestion() {
@@ -197,5 +207,55 @@ public class MainFormController implements Initializable {
         alert.setHeaderText("Эксперт по подбору книг");
         alert.setContentText("Данная программа - лучший друг в вопросе выбора книги кому бы то ни было. Выбираете вы её для себя или для кого-то, просто так или в подарок - это не важно. Наша система поможет решить любую вашу задачу!");
         alert.showAndWait();
+    }
+
+    public void loadMenuOnAction(ActionEvent actionEvent) {
+        DirectoryChooser chooser = new DirectoryChooser();
+        chooser.setTitle("Загрузить базу знаний");
+        File defaultDirectory = new File(System.getProperty("user.dir"));
+        chooser.setInitialDirectory(defaultDirectory);
+        File selectedDirectory = chooser.showDialog(Main.getMainStage());
+
+        if (selectedDirectory.isDirectory()) {
+            DataManager.load(selectedDirectory.getPath());
+
+            init();
+
+            Main.getQuestionGraphFormController().updateDialog();
+            Main.getQuestionGraphFormController().updateTree();
+        } else {
+            alertErrorDirectory();
+        }
+    }
+
+    public void saveMenuOnAction(ActionEvent actionEvent) {
+        DirectoryChooser chooser = new DirectoryChooser();
+        chooser.setTitle("Сохранить базу знаний");
+        File defaultDirectory = new File(System.getProperty("user.dir"));
+        chooser.setInitialDirectory(defaultDirectory);
+        File selectedDirectory = chooser.showDialog(Main.getMainStage());
+
+        if (selectedDirectory.isDirectory()) {
+            DataManager.save(selectedDirectory.getPath());
+        } else {
+            alertErrorDirectory();
+        }
+    }
+
+    private void alertErrorDirectory() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Ошибка загрузки базы знаний");
+        alert.setHeaderText("Внимание возможно неверно выбрана папка");
+        alert.setContentText("Попробуйте выбрать другую папку...");
+        alert.showAndWait();
+    }
+
+    public void loadDefaultMenuOnAction(ActionEvent actionEvent) {
+        DataManager.defaultBase();
+
+        init();
+
+        Main.getQuestionGraphFormController().updateDialog();
+        Main.getQuestionGraphFormController().updateTree();
     }
 }

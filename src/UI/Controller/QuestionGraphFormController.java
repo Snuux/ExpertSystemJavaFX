@@ -1,29 +1,18 @@
 package UI.Controller;
 
 import Data.Attribute;
-import Data.DataManager;
 import Data.Rule;
-import UI.UIUtilities;
-import javafx.application.Platform;
-import javafx.beans.property.ListProperty;
-import javafx.beans.property.SimpleListProperty;
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import javafx.util.Pair;
 
 import java.net.URL;
-import java.util.Iterator;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class QuestionGraphFormController implements Initializable {
@@ -32,11 +21,11 @@ public class QuestionGraphFormController implements Initializable {
     @FXML
     TreeView<Rule> treeView;
     @FXML
-    ComboBox attributeComboBox;
+    ComboBox<String> attributeComboBox;
     @FXML
     ComboBox valueComboBox;
     @FXML
-    ComboBox operationComboBox;
+    ComboBox<Rule.Operation> operationComboBox;
     @FXML
     TextField tagField;
     @FXML
@@ -46,6 +35,11 @@ public class QuestionGraphFormController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        updateDialog();
+        //UIUtilities.updateTooltipBehavior(0, 999999, 0, true);
+    }
+
+    public void updateDialog() {
         treeView.setRoot(Data.DataManager.getTree());
         currentTreeItemSelection = Data.DataManager.getTree();
         createContextMenu(Data.DataManager.getTree());
@@ -57,8 +51,6 @@ public class QuestionGraphFormController implements Initializable {
                 (observable, oldValue, newValue) ->
                         valueComboBox.getTooltip().setText(newValue.toString())
         );
-
-        UIUtilities.updateTooltipBehavior(0, 999999, 0, true);
     }
 
     public void updateTree() {
@@ -70,7 +62,7 @@ public class QuestionGraphFormController implements Initializable {
         return currentTreeItemSelection;
     }
 
-    private void createContextMenu(TreeItem iRoot) {
+    private void createContextMenu(TreeItem<Rule> iRoot) {
         MenuItem entry1 = new MenuItem("Добавить правило");
         MenuItem entry2 = new MenuItem("Исправить правило");
         MenuItem entry3 = new MenuItem("Удалить правило");
@@ -129,10 +121,14 @@ public class QuestionGraphFormController implements Initializable {
             currentTreeItemSelection = selectedItem;
             Rule selectedItemRule = selectedItem.getValue();
 
-            tagField.setText(selectedItemRule.getTag());
-            attributeComboBox.setValue(selectedItemRule.getAttribute().getText());
-            valueComboBox.setValue(selectedItemRule.getValue());
-            operationComboBox.setValue(selectedItemRule.getOperation());
+            if (selectedItemRule != null) {
+                tagField.setText(selectedItemRule.getTag());
+                attributeComboBox.setValue(selectedItemRule.getAttribute().getText());
+                operationComboBox.setValue(selectedItemRule.getOperation());
+
+                if (selectedItemRule.getValue() != null)
+                    valueComboBox.setValue(selectedItemRule.getValue());
+            }
         }
     }
 

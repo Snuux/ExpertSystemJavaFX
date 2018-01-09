@@ -4,6 +4,7 @@ import Data.Rule;
 import javafx.scene.control.TreeItem;
 
 import java.io.*;
+import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class FileSerialization<T> {
@@ -52,11 +53,11 @@ public class FileSerialization<T> {
         int descCount = count - 1; //файлы с конца
 
         try {
-            ArrayList<String> allFiles = getAllFilesFromDirectoryWithName("save", filename);
+            ArrayList<String> allFiles = getAllFilesFromDirectoryWithName(filename, "TreeSer");
 
             for (int i = 0; i < allFiles.size(); i++) {
                 String str = allFiles.get(i);
-                ois = new ObjectInputStream(new FileInputStream("save/" + str));
+                ois = new ObjectInputStream(new FileInputStream(filename + "/" + str));
                 Node n = (Node) ois.readObject();
                 if (((Rule) n.getData()).getTag().equals("ROOT"))
                     node = n;
