@@ -27,7 +27,6 @@ public class DataManager {
     }
 
     public static void defaultBase() {
-
         values = new ArrayList<>();
         values.addAll(Arrays.asList("Да", "Нет", "Не знаю",
                 "Корень",
@@ -477,5 +476,16 @@ public class DataManager {
             for (TreeItem<Rule> innerNode : node.getChildren())
                 reset(innerNode);
         node.getValue().reset();
+    }
+
+    public static int getIsUsedCountforObjects() {
+        int count = 0;
+        for (TreeItem<Rule> i: tree.getChildren()) {
+            if (!i.getValue().isUsed()) {
+                count++;
+            }
+        }
+
+        return count;
     }
 }

@@ -18,7 +18,8 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("FXML/mainForm.fxml"));
         primaryStage.setTitle("Экспертная система: Выбор книги");
-        primaryStage.setScene(new Scene(root, 300, 325));
+        Scene scene = new Scene(root, 300, 325);
+        primaryStage.setScene(scene);
         primaryStage.show();
         primaryStage.setOnCloseRequest(e -> System.exit(0));
         mainStage = primaryStage;

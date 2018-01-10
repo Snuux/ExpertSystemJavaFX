@@ -6,15 +6,16 @@ import Data.Rule;
 import UI.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
@@ -34,6 +35,9 @@ public class MainFormController implements Initializable {
 
     @FXML
     public Label questionLabel;
+
+    @FXML
+    VBox mainBox;
 
     @FXML
     public void handleAboutAction(javafx.event.ActionEvent actionEvent) {
@@ -81,9 +85,15 @@ public class MainFormController implements Initializable {
         } else {
             //Ищем новый объект с минимальным деревом вопросов
             currentNode = DataManager.getPreferObject(DataManager.getTree());
+
+            //Если объект остался один, то сразу выводим его
+            if (DataManager.getIsUsedCountforObjects() == 1) {
+                objectSelected(currentNode);
+                return;
+            }
             //Если такой объект не найден, то останавливаем работу
             // и говорим, что в системе нет соответствующего объекта
-            if (currentNode == null) {
+            else if (currentNode == null) {
                 noObjectSelected();
                 return;
             }
@@ -172,7 +182,12 @@ public class MainFormController implements Initializable {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Результат");
         alert.setHeaderText("Экспертная система нашла нужный объект");
-        alert.setContentText(node.getValue().getAttribute().getValue().toString());
+
+        if (node.getValue().getAttribute().getValue() == null)
+            alert.setContentText(node.getValue().toString());
+        else
+            alert.setContentText(node.getValue().getAttribute().getValue().toString());
+
         alert.showAndWait().ifPresent(resetConsumer);
     }
 
@@ -185,6 +200,17 @@ public class MainFormController implements Initializable {
         alert.setTitle("Результат");
         alert.setHeaderText("К сожалению экспертная система на смогла выбрать объект!");
         alert.setContentText("Попробуйте заново...");
+        alert.showAndWait().ifPresent(resetConsumer);
+    }
+
+    /**
+     * Метод, завершающий работу ЭС если объект остался один
+     */
+    private void noObjectSelectedLastOne(TreeItem<Rule> node) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Результат");
+        alert.setHeaderText("К сожалению экспертная система на смогла выбрать объект!");
+        alert.setContentText("Ближайший подходящий объект: " + node.getValue());
         alert.showAndWait().ifPresent(resetConsumer);
     }
 
