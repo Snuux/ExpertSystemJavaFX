@@ -14,10 +14,11 @@
     <MenuBar id="menuBar"> <!--onKeyPressed="#handleKeyInput"-->
         <Menu text="Файл">
             <items>
-                <MenuItem fx:id="loadMenuItem" onAction="#loadMenuOnAction" text="Загрузить базу знаний" />
-            <MenuItem fx:id="saveMenuItem" onAction="#saveMenuOnAction" text="Сохранить базу знаний" />
+                <MenuItem fx:id="loadMenuItem" onAction="#loadMenuOnAction" text="Загрузить базу знаний из папки" />
+            <MenuItem fx:id="saveMenuItem" onAction="#saveMenuOnAction" text="Сохранить базу знаний из папки" />
                 <SeparatorMenuItem />
-            <MenuItem fx:id="loadDefaultMenuItem" onAction="#loadDefaultMenuOnAction" text="Загрузить базу по умолчанию" />
+            <MenuItem fx:id="loadDefaultBooksMenuItem" onAction="#loadDefaultBooksMenuOnAction" text="Загрузить базу книг" />
+            <MenuItem fx:id="loadDefaultLanguagesMenuItem" onAction="#loadDefaultLanguagesMenuOnAction" text="Загрузить базу языков" />
             <SeparatorMenuItem />
                 <MenuItem fx:id="exitMenuItem" onAction="#handleExitMenuItem" text="Выход" />
             </items>
@@ -38,11 +39,11 @@
 
     <VBox fx:id="questionBox" alignment="TOP_CENTER" spacing="4">
         <children>
-            <Label fx:id="questionLabelLol" alignment="CENTER" contentDisplay="CENTER" text="Вопрос:" textAlignment="CENTER" wrapText="true" />
+            <Label fx:id="questionTitle" alignment="CENTER" contentDisplay="CENTER" text="Вопрос:" textAlignment="CENTER" wrapText="true" />
 
-            <Label fx:id="questionLabel" alignment="CENTER" snapToPixel="false" text="Текст вопроса?" textAlignment="CENTER">
+            <Label fx:id="questionLabel" alignment="CENTER" snapToPixel="false" text="Текст вопроса?" textAlignment="CENTER" wrapText="true">
                 <VBox.margin>
-                    <Insets top="10.0" />
+                    <Insets left="15.0" right="15.0" top="10.0" />
                 </VBox.margin></Label>
 
             <HBox alignment="CENTER">

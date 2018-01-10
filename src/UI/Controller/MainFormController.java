@@ -21,6 +21,10 @@ import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
 public class MainFormController implements Initializable {
+
+    @FXML
+    public Label questionTitle;
+
     @FXML
     private MenuBar menuBar;
 
@@ -60,6 +64,10 @@ public class MainFormController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        questionTitle.setText("Добро пожаловать в экспертную систему!");
+        questionLabel.setText("Пожалуйста загрузите базу знаний из \"Файл\"->\"Загрузить базу знаний из папки\".\n" +
+                "Или используйте базу знаний по умолчанию (для тем: \"Выбор книги\" и \"Выбор языка программирования\").");
+
         init();
     }
 
@@ -74,6 +82,7 @@ public class MainFormController implements Initializable {
     }
 
     private void processNextQuestion() {
+        questionTitle.setText("Вопрос:");
         //Получение вопроса для текущего объекта
         Rule currentRule = (Rule) DataManager.getQuestion(currentNode).getValue();
 
@@ -184,9 +193,15 @@ public class MainFormController implements Initializable {
         alert.setHeaderText("Экспертная система нашла нужный объект");
 
         if (node.getValue().getAttribute().getValue() == null)
-            alert.setContentText(node.getValue().toString());
+            alert.setContentText(node.getValue().getValue().toString());
         else
             alert.setContentText(node.getValue().getAttribute().getValue().toString());
+
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.getStylesheets().add(
+                getClass().getResource("/UI/Resources/dialogStyle.css").toExternalForm());
+
+        dialogPane.getStyleClass().add("myDialog");
 
         alert.showAndWait().ifPresent(resetConsumer);
     }
@@ -230,8 +245,10 @@ public class MainFormController implements Initializable {
     public void handleAboutAppAction(ActionEvent actionEvent) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("О программе");
-        alert.setHeaderText("Эксперт по подбору книг");
-        alert.setContentText("Данная программа - лучший друг в вопросе выбора книги кому бы то ни было. Выбираете вы её для себя или для кого-то, просто так или в подарок - это не важно. Наша система поможет решить любую вашу задачу!");
+        alert.setHeaderText("Эксперт по подбору книг, языков программирования и т.д.");
+        alert.setContentText("Данная программа - лучший друг в вопросе выбора книги или языка программирования кому бы то ни было. " +
+                "Выбираете вы их для себя или для кого-то, просто так или в подарок - это не важно. " +
+                "Наша система поможет решить любую вашу задачу!");
         alert.showAndWait();
     }
 
@@ -276,8 +293,17 @@ public class MainFormController implements Initializable {
         alert.showAndWait();
     }
 
-    public void loadDefaultMenuOnAction(ActionEvent actionEvent) {
-        DataManager.defaultBase();
+    public void loadDefaultBooksMenuOnAction(ActionEvent actionEvent) {
+        DataManager.defaultBaseBooks();
+
+        init();
+
+        Main.getQuestionGraphFormController().updateDialog();
+        Main.getQuestionGraphFormController().updateTree();
+    }
+
+    public void loadDefaultLanguagesMenuOnAction(ActionEvent actionEvent) {
+        DataManager.defaultBaseLanguages();
 
         init();
 
