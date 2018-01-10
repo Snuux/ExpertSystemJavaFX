@@ -14,10 +14,10 @@ public class DataManager {
     private static ArrayList<Attribute> attributes;
     private static ArrayList<String> values;
 
-    public static void test() {
+    /*public static void test() {
         //defaultBase();
         //load();
-    }
+    }*/
 
     public static ArrayList<String> getValues() {
         return values;
@@ -298,13 +298,15 @@ public class DataManager {
         addRule(R, null, new Rule<>("O3", o, "C++"));
         addRule(R, null, new Rule<>("O4", o, "C#"));
         addRule(R, null, new Rule<>("O5", o, "Java"));
-//        addRule(R, null, new Rule<>("O6", o, "python"));
-//        addRule(R, null, new Rule<>("O7", o, "PHP"));
-//        addRule(R, null, new Rule<>("O8", o, "JavaScript"));
-//        addRule(R, null, new Rule<>("O9", o, "Kotlin"));
-//        addRule(R, null, new Rule<>("10", o, "Pascal"));
-//        addRule(R, null, new Rule<>("11", o, "Swift"));
+        addRule(R, null, new Rule<>("O6", o, "python"));
+        addRule(R, null, new Rule<>("O7", o, "PHP"));
+        addRule(R, null, new Rule<>("O8", o, "Ruby"));
+//        addRule(R, null, new Rule<>("O9", o, "JavaScript"));
+        addRule(R, null, new Rule<>("O10", o, "Kotlin"));
+//        addRule(R, null, new Rule<>("11", o, "Pascal"));
+        addRule(R, null, new Rule<>("O12", o, "Swift"));
 
+        //FASM
         TreeItem<Rule> O1 = addRule(getNodeFromNodeWithTag(R, "O1"), Rule.Operation.OR,
                 new Rule<>("A1", a1, "Низкоуровневый"),
                 new Rule<>("A4", a4, "Императивная"));
@@ -312,6 +314,7 @@ public class DataManager {
         addRule(getNodeFromNodeWithTag(O1, "A1"), Rule.Operation.AND, new Rule<>("Q11", q11, 1), new Rule<>("Q12", q12, 1));
         addRule(getNodeFromNodeWithTag(O1, "A4"), Rule.Operation.AND, new Rule<>("Q71", q71, 1), new Rule<>("Q72", q72, 1));
 
+        //Си
         TreeItem<Rule> O2 = addRule(getNodeFromNodeWithTag(R, "O2"), Rule.Operation.AND,
                 new Rule<>("A2", a2, "Статическая"),
                 new Rule<>("A3", a3, "Компилируемый"),
@@ -323,6 +326,7 @@ public class DataManager {
         addRule(getNodeFromNodeWithTag(O2, "A5"), Rule.Operation.AND, new Rule<>("Q101", q101, 1), new Rule<>("Q102", q102, 1));
         addRule(getNodeFromNodeWithTag(O2, "A6"), Rule.Operation.AND, new Rule<>("Q131", q131, 1), new Rule<>("Q132", q132, 1));
 
+        //C++
         TreeItem<Rule> O3 = addRule(getNodeFromNodeWithTag(R, "O3"), Rule.Operation.AND,
                 new Rule<>("A1", a1, "Высокоуровневый"),
                 new Rule<>("A2", a2, "Статическая"),
@@ -338,6 +342,7 @@ public class DataManager {
         addRule(getNodeFromNodeWithTag(O3, "A5"), Rule.Operation.AND, new Rule<>("Q101", q101, 1), new Rule<>("Q102", q102, 1));
         addRule(getNodeFromNodeWithTag(O3, "A6"), Rule.Operation.AND, new Rule<>("Q131", q131, 1), new Rule<>("Q132", q132, 1));
 
+        //С#
         TreeItem<Rule> O4 = addRule(getNodeFromNodeWithTag(R, "O4"), Rule.Operation.AND,
                 new Rule<>("A1", a1, "Высокоуровневый"),
                 new Rule<>("A2", a2, "Статическая"),
@@ -375,8 +380,107 @@ public class DataManager {
         addRule(getNodeFromNodeWithTag(O5, "A5"), Rule.Operation.AND, new Rule<>("Q111", q111, 1), new Rule<>("Q112", q112, 1));
         addRule(getNodeFromNodeWithTag(O5, "A6"), Rule.Operation.AND, new Rule<>("Q121", q121, 1), new Rule<>("Q122", q122, 1));
 
+        //python
+        TreeItem<Rule> O6 = addRule(getNodeFromNodeWithTag(R, "O6"), Rule.Operation.AND,
+                new Rule<>("A1", a1, "Высокоуровневый"),
+                new Rule<>("A2", a2, "Динамическая"),
+                new Rule<>("A3", a3, "Интерпретируемый"),
+                new Rule<>("T1", t1, "Да"),
+                new Rule<>("A5", a5, "Не совместим"),
+                new Rule<>("A6", a6, "Простой"));
 
+        addRule(getNodeFromNodeWithTag(O6, "A1"), Rule.Operation.AND, new Rule<>("Q21", q21, 1), new Rule<>("Q22", q22, 1));
+        addRule(getNodeFromNodeWithTag(O6, "A2"), Rule.Operation.AND, new Rule<>("Q41", q41, 1), new Rule<>("Q42", q42, 1));
+        addRule(getNodeFromNodeWithTag(O6, "A3"), Rule.Operation.AND, new Rule<>("Q61", q61, 1), new Rule<>("Q62", q62, 1));
+        T1 = addRule(getNodeFromNodeWithTag(O6, "T1"), Rule.Operation.OR,
+                new Rule<>("A41", a4, "ООП"),
+                new Rule<>("A42", a4, "Функциональная"));
+        addRule(getNodeFromNodeWithTag(T1, "A41"), Rule.Operation.AND, new Rule<>("Q81", q81, 1), new Rule<>("Q82", q82, 1));
+        addRule(getNodeFromNodeWithTag(T1, "A42"), Rule.Operation.AND, new Rule<>("Q91", q91, 1), new Rule<>("Q92", q92, 1));
+        addRule(getNodeFromNodeWithTag(O6, "A5"), Rule.Operation.AND, new Rule<>("Q111", q111, 1), new Rule<>("Q112", q112, 1));
+        addRule(getNodeFromNodeWithTag(O6, "A6"), Rule.Operation.AND, new Rule<>("Q121", q121, 1), new Rule<>("Q122", q122, 1));
 
+        //PHP
+        TreeItem<Rule> O7 = addRule(getNodeFromNodeWithTag(R, "O7"), Rule.Operation.AND,
+                new Rule<>("A1", a1, "Высокоуровневый"),
+                new Rule<>("A2", a2, "Динамическая"),
+                new Rule<>("A3", a3, "Интерпретируемый"),
+                new Rule<>("T1", t1, "Да"),
+                new Rule<>("A5", a5, "Не совместим"),
+                new Rule<>("A6", a6, "Сложный"));
+
+        addRule(getNodeFromNodeWithTag(O7, "A1"), Rule.Operation.AND, new Rule<>("Q21", q21, 1), new Rule<>("Q22", q22, 1));
+        addRule(getNodeFromNodeWithTag(O7, "A2"), Rule.Operation.AND, new Rule<>("Q41", q41, 1), new Rule<>("Q42", q42, 1));
+        addRule(getNodeFromNodeWithTag(O7, "A3"), Rule.Operation.AND, new Rule<>("Q61", q61, 1), new Rule<>("Q62", q62, 1));
+        T1 = addRule(getNodeFromNodeWithTag(O7, "T1"), Rule.Operation.OR,
+                new Rule<>("A41", a4, "ООП"),
+                new Rule<>("A42", a4, "Функциональная"));
+        addRule(getNodeFromNodeWithTag(T1, "A41"), Rule.Operation.AND, new Rule<>("Q81", q81, 1), new Rule<>("Q82", q82, 1));
+        addRule(getNodeFromNodeWithTag(T1, "A42"), Rule.Operation.AND, new Rule<>("Q91", q91, 1), new Rule<>("Q92", q92, 1));
+        addRule(getNodeFromNodeWithTag(O7, "A5"), Rule.Operation.AND, new Rule<>("Q111", q111, 1), new Rule<>("Q112", q112, 1));
+        addRule(getNodeFromNodeWithTag(O7, "A6"), Rule.Operation.AND, new Rule<>("Q131", q131, 1), new Rule<>("Q132", q132, 1));
+
+        //Ruby
+        TreeItem<Rule> O8 = addRule(getNodeFromNodeWithTag(R, "O8"), Rule.Operation.AND,
+                new Rule<>("A1", a1, "Высокоуровневый"),
+                new Rule<>("A2", a2, "Динамическая"),
+                new Rule<>("A3", a3, "Интерпретируемый"),
+                new Rule<>("A4", a4, "ООП"),
+                new Rule<>("A5", a5, "Не совместим"),
+                new Rule<>("A6", a6, "Сложный"));
+
+        addRule(getNodeFromNodeWithTag(O8, "A1"), Rule.Operation.AND, new Rule<>("Q21", q21, 1), new Rule<>("Q22", q22, 1));
+        addRule(getNodeFromNodeWithTag(O8, "A2"), Rule.Operation.AND, new Rule<>("Q41", q41, 1), new Rule<>("Q42", q42, 1));
+        addRule(getNodeFromNodeWithTag(O8, "A3"), Rule.Operation.AND, new Rule<>("Q61", q61, 1), new Rule<>("Q62", q62, 1));
+        addRule(getNodeFromNodeWithTag(O8, "A4"), Rule.Operation.AND, new Rule<>("Q81", q81, 1), new Rule<>("Q82", q82, 1));
+        addRule(getNodeFromNodeWithTag(O8, "A5"), Rule.Operation.AND, new Rule<>("Q111", q111, 1), new Rule<>("Q112", q112, 1));
+        addRule(getNodeFromNodeWithTag(O8, "A6"), Rule.Operation.AND, new Rule<>("Q131", q131, 1), new Rule<>("Q132", q132, 1));
+
+        //JavaScript
+        //Необходимо доработать
+
+        //Kotlin
+        TreeItem<Rule> O10 = addRule(getNodeFromNodeWithTag(R, "O10"), Rule.Operation.AND,
+                new Rule<>("A1", a1, "Высокоуровневый"),
+                new Rule<>("A2", a2, "Динамическая"),
+                new Rule<>("A3", a3, "Компилируемый"),
+                new Rule<>("T1", t1, "Да"),
+                new Rule<>("A5", a5, "Не совместим"),
+                new Rule<>("A6", a6, "Простой"));
+
+        addRule(getNodeFromNodeWithTag(O10, "A1"), Rule.Operation.AND, new Rule<>("Q21", q21, 1), new Rule<>("Q22", q22, 1));
+        addRule(getNodeFromNodeWithTag(O10, "A2"), Rule.Operation.AND, new Rule<>("Q41", q41, 1), new Rule<>("Q42", q42, 1));
+        addRule(getNodeFromNodeWithTag(O10, "A3"), Rule.Operation.AND, new Rule<>("Q51", q51, 1), new Rule<>("Q52", q52, 1));
+        T1 = addRule(getNodeFromNodeWithTag(O10, "T1"), Rule.Operation.OR,
+                new Rule<>("A41", a4, "ООП"),
+                new Rule<>("A42", a4, "Функциональная"));
+        addRule(getNodeFromNodeWithTag(T1, "A41"), Rule.Operation.AND, new Rule<>("Q81", q81, 1), new Rule<>("Q82", q82, 1));
+        addRule(getNodeFromNodeWithTag(T1, "A42"), Rule.Operation.AND, new Rule<>("Q91", q91, 1), new Rule<>("Q92", q92, 1));
+        addRule(getNodeFromNodeWithTag(O10, "A5"), Rule.Operation.AND, new Rule<>("Q111", q111, 1), new Rule<>("Q112", q112, 1));
+        addRule(getNodeFromNodeWithTag(O10, "A6"), Rule.Operation.AND, new Rule<>("Q121", q121, 1), new Rule<>("Q122", q122, 1));
+
+        //Pascal
+        //доработать
+
+        //Swift
+        TreeItem<Rule> O12 = addRule(getNodeFromNodeWithTag(R, "O12"), Rule.Operation.AND,
+                new Rule<>("A1", a1, "Высокоуровневый"),
+                new Rule<>("A2", a2, "Динамическая"),
+                new Rule<>("A3", a3, "Интерпретируемый"),
+                new Rule<>("T1", t1, "Да"),
+                new Rule<>("A5", a5, "Совместим"),
+                new Rule<>("A6", a6, "Простой"));
+
+        addRule(getNodeFromNodeWithTag(O12, "A1"), Rule.Operation.AND, new Rule<>("Q21", q21, 1), new Rule<>("Q22", q22, 1));
+        addRule(getNodeFromNodeWithTag(O12, "A2"), Rule.Operation.AND, new Rule<>("Q41", q41, 1), new Rule<>("Q42", q42, 1));
+        addRule(getNodeFromNodeWithTag(O12, "A3"), Rule.Operation.AND, new Rule<>("Q61", q61, 1), new Rule<>("Q62", q62, 1));
+        T1 = addRule(getNodeFromNodeWithTag(O12, "T1"), Rule.Operation.OR,
+                new Rule<>("A41", a4, "ООП"),
+                new Rule<>("A42", a4, "Функциональная"));
+        addRule(getNodeFromNodeWithTag(T1, "A41"), Rule.Operation.AND, new Rule<>("Q81", q81, 1), new Rule<>("Q82", q82, 1));
+        addRule(getNodeFromNodeWithTag(T1, "A42"), Rule.Operation.AND, new Rule<>("Q91", q91, 1), new Rule<>("Q92", q92, 1));
+        addRule(getNodeFromNodeWithTag(O12, "A5"), Rule.Operation.AND, new Rule<>("Q101", q101, 1), new Rule<>("Q102", q102, 1));
+        addRule(getNodeFromNodeWithTag(O12, "A6"), Rule.Operation.AND, new Rule<>("Q121", q121, 1), new Rule<>("Q122", q122, 1));
     }
 
     public static void load(String filename) {
@@ -525,18 +629,16 @@ public class DataManager {
         //Если хоть один дочерний элемент известен и соответствует правилу,
         //то текущее правило должно отработать
         if (rule.getOperation() == Rule.Operation.OR && checkEvenOneChildrenUsed(node) && !rule.isUsed()) {
-            if (checkAllChildrenUsed(node)) {
-                rule.setUsed(true);
-            } else {
-                for (TreeItem<Rule> innerItem : node.getChildren()) {
-                    Rule innerRule = innerItem.getValue();
-                    if (innerRule.isUsed() && innerRule.isEqualToAttribute()) {
-                        rule.setUsed(true);
-                        rule.setValueToAttribute();
-                        break;
-                    }
+            for (TreeItem<Rule> innerItem : node.getChildren()) {
+                Rule innerRule = innerItem.getValue();
+                if (innerRule.isUsed() && innerRule.isEqualToAttribute()) {
+                    rule.setUsed(true);
+                    rule.setValueToAttribute();
+                    break;
                 }
             }
+            if (checkAllChildrenUsed(node) && !rule.isUsed())
+                rule.setUsed(true);
         }
 
         //Если на вопрос был дан ответ в другой ветке, то отмечаем правило, как отработанное

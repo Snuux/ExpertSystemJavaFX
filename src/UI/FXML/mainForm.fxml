@@ -15,7 +15,7 @@
         <Menu text="Файл">
             <items>
                 <MenuItem fx:id="loadMenuItem" onAction="#loadMenuOnAction" text="Загрузить базу знаний из папки" />
-            <MenuItem fx:id="saveMenuItem" onAction="#saveMenuOnAction" text="Сохранить базу знаний из папки" />
+            <MenuItem fx:id="saveMenuItem" onAction="#saveMenuOnAction" text="Сохранить базу знаний в папку" />
                 <SeparatorMenuItem />
             <MenuItem fx:id="loadDefaultBooksMenuItem" onAction="#loadDefaultBooksMenuOnAction" text="Загрузить базу книг" />
             <MenuItem fx:id="loadDefaultLanguagesMenuItem" onAction="#loadDefaultLanguagesMenuOnAction" text="Загрузить базу языков" />
