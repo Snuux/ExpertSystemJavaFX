@@ -4,6 +4,7 @@ import Data.Serialization.FileSerialization;
 import Data.Serialization.Node;
 import Data.Serialization.Tree;
 import javafx.scene.control.TreeItem;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -26,8 +27,155 @@ public class DataManager {
         Collections.addAll(attributes, atrs);
     }
 
+
     public static void defaultBase() {
         values = new ArrayList<>();
+        values.addAll(Arrays.asList("Да", "Нет", "Не знаю",
+                "Корень",
+                "FASM",
+                "Си",
+                "C++",
+                "C#",
+                "Java",
+                "python",
+                "PHP",
+                "JavaScript",
+                "Kotlin",
+                "Pascal",
+                "Swift"));
+
+        Attribute<Boolean> r = new Attribute<>("Корень дерева", null, Attribute.Type.ROOT);
+
+        Attribute<String> a1 = new Attribute<>("Уровень", null, Attribute.Type.ATTRIBUTE);
+        Attribute<Integer> q11 = new Attribute<>("Необходимо ли в Вашем проекте писать ПО для микроконтроллеров?", null, Attribute.Type.QUESTION, Attribute.ValueType.TRUE_FALSE); // низк.
+        Attribute<Integer> q12 = new Attribute<>("Нужно ли Вам взаимодействовать с драйверами устройств?", null, Attribute.Type.QUESTION, Attribute.ValueType.TRUE_FALSE); // низк.
+        Attribute<Integer> q21 = new Attribute<>("Необходимо ли в Вашем проекте создавать пользовательские интерфейсы?", null, Attribute.Type.QUESTION, Attribute.ValueType.TRUE_FALSE); // высок.
+        Attribute<Integer> q22 = new Attribute<>("Планируете ли вы проводить тестирование в ходе разработки?", null, Attribute.Type.QUESTION, Attribute.ValueType.TRUE_FALSE); // высок.
+
+        Attribute<String> a2 = new Attribute<>("Типизация", null, Attribute.Type.ATTRIBUTE);
+        Attribute<Integer> q31 = new Attribute<>("Важно ли выявлять все ошибки на этапе компиляции??", null, Attribute.Type.QUESTION, Attribute.ValueType.TRUE_FALSE); // стат.
+        Attribute<Integer> q32 = new Attribute<>("Важна ли скорость работы проекта после компиляции?", null, Attribute.Type.QUESTION, Attribute.ValueType.TRUE_FALSE); // стат.
+        Attribute<Integer> q41 = new Attribute<>("Требуется ли в вашем проекте написание скриптов?", null, Attribute.Type.QUESTION, Attribute.ValueType.TRUE_FALSE); // динам.
+        Attribute<Integer> q42 = new Attribute<>("Планируется ли в проекте работа с СУБД и веб-службами?", null, Attribute.Type.QUESTION, Attribute.ValueType.TRUE_FALSE); // динам.
+
+        Attribute<String> a3 = new Attribute<>("Тип сборки", null, Attribute.Type.ATTRIBUTE);
+        Attribute<Integer> q51 = new Attribute<>("Будет ли продукт требовательным к ресурсам компьютера?", null, Attribute.Type.QUESTION, Attribute.ValueType.TRUE_FALSE); // комп.
+        Attribute<Integer> q52 = new Attribute<>("Должна ли программа быть независимой от других программ?", null, Attribute.Type.QUESTION, Attribute.ValueType.TRUE_FALSE); // комп.
+        Attribute<Integer> q61 = new Attribute<>("Важна ли переносимость проекта на разные платформы?", null, Attribute.Type.QUESTION, Attribute.ValueType.TRUE_FALSE); // интерпрет.
+        Attribute<Integer> q62 = new Attribute<>("Критична ли сложность отладки кода?", null, Attribute.Type.QUESTION, Attribute.ValueType.TRUE_FALSE); // интерпрет.
+
+        Attribute<String> a4 = new Attribute<>("Поддерживаемая парадигма", null, Attribute.Type.ATTRIBUTE);
+        Attribute<Integer> q71 = new Attribute<>("Необходима ли возможность писать машинные инструкции?", null, Attribute.Type.QUESTION, Attribute.ValueType.TRUE_FALSE); // императ.
+        Attribute<Integer> q72 = new Attribute<>("Необходима ли совместимость с устаревшими системами?", null, Attribute.Type.QUESTION, Attribute.ValueType.TRUE_FALSE); // императ.
+        Attribute<Integer> q81 = new Attribute<>("Является ли Ваш проект крупной высоконагруженной системой?", null, Attribute.Type.QUESTION, Attribute.ValueType.TRUE_FALSE); // ООП
+        Attribute<Integer> q82 = new Attribute<>("Будет ли Ваш проект игрой?", null, Attribute.Type.QUESTION, Attribute.ValueType.TRUE_FALSE); // ООП
+        Attribute<Integer> q91 = new Attribute<>("Планируется ли в проекте работа с большими массивами?", null, Attribute.Type.QUESTION, Attribute.ValueType.TRUE_FALSE); // функц.
+        Attribute<Integer> q92 = new Attribute<>("Необходима ли в вашем проекте реализации конкурентности (concurrency)?", null, Attribute.Type.QUESTION, Attribute.ValueType.TRUE_FALSE); // функц.
+
+        Attribute<String> a5 = new Attribute<>("Совместимость с Си", null, Attribute.Type.ATTRIBUTE);
+        Attribute<Integer> q101 = new Attribute<>("Есть ли необходимость в написании быстрых нетривиальных функций?", null, Attribute.Type.QUESTION, Attribute.ValueType.TRUE_FALSE); // совместим
+        Attribute<Integer> q102 = new Attribute<>("Планируете ли вы использовать Си-библиотеки?", null, Attribute.Type.QUESTION, Attribute.ValueType.TRUE_FALSE); // совместим
+        Attribute<Integer> q111 = new Attribute<>("Должен ли язык иметь обширную базу библиотек (как, например, Java)?", null, Attribute.Type.QUESTION, Attribute.ValueType.TRUE_FALSE); // не совместим
+        Attribute<Integer> q112 = new Attribute<>("Ваша программа разрабатывается для веба?", null, Attribute.Type.QUESTION, Attribute.ValueType.TRUE_FALSE); // не совместим
+
+        Attribute<String> a6 = new Attribute<>("Простота в изучении", null, Attribute.Type.ATTRIBUTE);
+        Attribute<Integer> q121 = new Attribute<>("Это Ваш первый проект?", null, Attribute.Type.QUESTION, Attribute.ValueType.TRUE_FALSE); // простой
+        Attribute<Integer> q122 = new Attribute<>("Боитесь ли вы трудностей?", null, Attribute.Type.QUESTION, Attribute.ValueType.TRUE_FALSE); // простой
+        Attribute<Integer> q131 = new Attribute<>("У Вас глубокие знания по математике?", null, Attribute.Type.QUESTION, Attribute.ValueType.TRUE_FALSE); // сложный
+        Attribute<Integer> q132 = new Attribute<>("У вас есть больше месяца на обучение?", null, Attribute.Type.QUESTION, Attribute.ValueType.TRUE_FALSE); // сложный
+
+        Attribute<String> o = new Attribute<>("Объект", null, Attribute.Type.OBJECT);
+
+        attributes = new ArrayList<>();
+        addAllAttributes(o, a1, a2, a3, a4, a5, a6, q11, q12, q21, q22, q31, q32, q41, q42, q51, q52, q61, q62, q71, q72, q81, q82, q91, q92,
+                q101, q102, q111, q112, q121, q122, q131, q132, r);
+
+        TreeItem<Rule> R = new TreeItem<>(new Rule<>("ROOT", r, "Корень"));
+        tree = R;
+
+        addRule(R, null, new Rule<>("O1", o, "FASM"));
+        addRule(R, null, new Rule<>("O2", o, "Си"));
+        addRule(R, null, new Rule<>("O3", o, "C++"));
+        addRule(R, null, new Rule<>("O4", o, "C#"));
+        addRule(R, null, new Rule<>("O5", o, "Java"));
+//        addRule(R, null, new Rule<>("O6", o, "python"));
+//        addRule(R, null, new Rule<>("O7", o, "PHP"));
+//        addRule(R, null, new Rule<>("O8", o, "JavaScript"));
+//        addRule(R, null, new Rule<>("O9", o, "Kotlin"));
+//        addRule(R, null, new Rule<>("10", o, "Pascal"));
+//        addRule(R, null, new Rule<>("11", o, "Swift"));
+
+        TreeItem<Rule> O1 = addRule(getNodeFromNodeWithTag(R, "O1"), Rule.Operation.OR,
+                new Rule<>("A1", a1, "Низкоуровневый"),
+                new Rule<>("A4", a4, "Императивная"));
+
+        addRule(getNodeFromNodeWithTag(O1, "A1"), Rule.Operation.AND, new Rule<>("Q11", q11, 1), new Rule<>("Q12", q12, 1));
+        addRule(getNodeFromNodeWithTag(O1, "A4"), Rule.Operation.AND, new Rule<>("Q71", q71, 1), new Rule<>("Q72", q72, 1));
+
+        TreeItem<Rule> O2 = addRule(getNodeFromNodeWithTag(R, "O2"), Rule.Operation.AND,
+                new Rule<>("A2", a2, "Статическая"),
+                new Rule<>("A3", a3, "Компилируемый"),
+                new Rule<>("A5", a5, "Совместим"),
+                new Rule<>("A6", a6, "Сложный"));
+
+        addRule(getNodeFromNodeWithTag(O2, "A2"), Rule.Operation.AND, new Rule<>("Q31", q31, 1), new Rule<>("Q32", q32, 1));
+        addRule(getNodeFromNodeWithTag(O2, "A3"), Rule.Operation.AND, new Rule<>("Q51", q51, 1), new Rule<>("Q52", q52, 1));
+        addRule(getNodeFromNodeWithTag(O2, "A5"), Rule.Operation.AND, new Rule<>("Q101", q101, 1), new Rule<>("Q102", q102, 1));
+        addRule(getNodeFromNodeWithTag(O2, "A6"), Rule.Operation.AND, new Rule<>("Q131", q131, 1), new Rule<>("Q132", q132, 1));
+
+        TreeItem<Rule> O3 = addRule(getNodeFromNodeWithTag(R, "O3"), Rule.Operation.AND,
+                new Rule<>("A1", a1, "Высокоуровневый"),
+                new Rule<>("A2", a2, "Статическая"),
+                new Rule<>("A3", a3, "Компилируемый"),
+                new Rule<>("A4", a4, "ООП"),
+                new Rule<>("A5", a5, "Совместим"),
+                new Rule<>("A6", a6, "Сложный"));
+
+        addRule(getNodeFromNodeWithTag(O3, "A1"), Rule.Operation.AND, new Rule<>("Q21", q21, 1), new Rule<>("Q22", q22, 1));
+        addRule(getNodeFromNodeWithTag(O3, "A2"), Rule.Operation.AND, new Rule<>("Q31", q31, 1), new Rule<>("Q32", q32, 1));
+        addRule(getNodeFromNodeWithTag(O3, "A3"), Rule.Operation.AND, new Rule<>("Q51", q51, 1), new Rule<>("Q52", q52, 1));
+        addRule(getNodeFromNodeWithTag(O3, "A4"), Rule.Operation.AND, new Rule<>("Q81", q81, 1), new Rule<>("Q82", q82, 1));
+        addRule(getNodeFromNodeWithTag(O3, "A5"), Rule.Operation.AND, new Rule<>("Q101", q101, 1), new Rule<>("Q102", q102, 1));
+        addRule(getNodeFromNodeWithTag(O3, "A6"), Rule.Operation.AND, new Rule<>("Q131", q131, 1), new Rule<>("Q132", q132, 1));
+
+        TreeItem<Rule> O4 = addRule(getNodeFromNodeWithTag(R, "O4"), Rule.Operation.AND,
+                new Rule<>("A1", a1, "Высокоуровневый"),
+                new Rule<>("A2", a2, "Статическая"),
+                new Rule<>("A3", a3, "Компилируемый"),
+                new Rule<>("A4", a4, "ООП"),
+                new Rule<>("A5", a5, "Совместим"),
+                new Rule<>("A6", a6, "Простой"));
+
+        addRule(getNodeFromNodeWithTag(O4, "A1"), Rule.Operation.AND, new Rule<>("Q21", q21, 1), new Rule<>("Q22", q22, 1));
+        addRule(getNodeFromNodeWithTag(O4, "A2"), Rule.Operation.AND, new Rule<>("Q31", q31, 1), new Rule<>("Q32", q32, 1));
+        addRule(getNodeFromNodeWithTag(O4, "A3"), Rule.Operation.AND, new Rule<>("Q51", q51, 1), new Rule<>("Q52", q52, 1));
+        addRule(getNodeFromNodeWithTag(O4, "A4"), Rule.Operation.AND, new Rule<>("Q81", q81, 1), new Rule<>("Q82", q82, 1));
+        addRule(getNodeFromNodeWithTag(O4, "A5"), Rule.Operation.AND, new Rule<>("Q101", q101, 1), new Rule<>("Q102", q102, 1));
+        addRule(getNodeFromNodeWithTag(O4, "A6"), Rule.Operation.AND, new Rule<>("Q121", q121, 1), new Rule<>("Q122", q122, 1));
+
+        Attribute<String> t1 = new Attribute<>("Парадигма (ООП или функц.)", null, Attribute.Type.ATTRIBUTE);
+
+        //Java
+        TreeItem<Rule> O5 = addRule(getNodeFromNodeWithTag(R, "O5"), Rule.Operation.AND,
+                new Rule<>("A1", a1, "Высокоуровневый"),
+                new Rule<>("A2", a2, "Статическая"),
+                new Rule<>("A3", a3, "Компилируемый"),
+                new Rule<>("T1", t1, "Да"), //!!!!!!!!!!!!!!!!!!!!
+                new Rule<>("A5", a5, "Не совместим"),
+                new Rule<>("A6", a6, "Простой"));
+
+        addRule(getNodeFromNodeWithTag(O5, "A1"), Rule.Operation.AND, new Rule<>("Q21", q21, 1), new Rule<>("Q22", q22, 1));
+        addRule(getNodeFromNodeWithTag(O5, "A2"), Rule.Operation.AND, new Rule<>("Q31", q31, 1), new Rule<>("Q32", q32, 1));
+        addRule(getNodeFromNodeWithTag(O5, "A3"), Rule.Operation.AND, new Rule<>("Q51", q51, 1), new Rule<>("Q52", q52, 1));
+        TreeItem<Rule> T1 = addRule(getNodeFromNodeWithTag(O5, "T1"), Rule.Operation.OR,
+                new Rule<>("A41", a4, "ООП"),
+                new Rule<>("A42", a4, "Функциональная"));
+        addRule(getNodeFromNodeWithTag(T1, "A41"), Rule.Operation.AND, new Rule<>("Q81", q81, 1), new Rule<>("Q82", q82, 1));
+        addRule(getNodeFromNodeWithTag(T1, "A42"), Rule.Operation.AND, new Rule<>("Q91", q91, 1), new Rule<>("Q92", q92, 1));
+        addRule(getNodeFromNodeWithTag(O5, "A5"), Rule.Operation.AND, new Rule<>("Q111", q111, 1), new Rule<>("Q112", q112, 1));
+        addRule(getNodeFromNodeWithTag(O5, "A6"), Rule.Operation.AND, new Rule<>("Q121", q121, 1), new Rule<>("Q122", q122, 1));
+
+        /*values = new ArrayList<>();
         values.addAll(Arrays.asList("Да", "Нет", "Не знаю",
                 "Корень",
                 "Властелин колец",
@@ -224,7 +372,7 @@ public class DataManager {
         addRule(getNodeFromNodeWithTag(O5, "A6"), Rule.Operation.AND, new Rule<>("Q131", q131, 1), new Rule<>("Q132", q132, 1));
         addRule(getNodeFromNodeWithTag(O5, "A7"), Rule.Operation.AND, new Rule<>("Q151", q151, 1), new Rule<>("Q152", q152, 1));
         addRule(getNodeFromNodeWithTag(O5, "A8"), Rule.Operation.AND, new Rule<>("Q191", q191, 1), new Rule<>("Q192", q192, 1));
-        addRule(getNodeFromNodeWithTag(O5, "A9"), Rule.Operation.AND, new Rule<>("Q201", q201, 1), new Rule<>("Q202", q202, 1));
+        addRule(getNodeFromNodeWithTag(O5, "A9"), Rule.Operation.AND, new Rule<>("Q201", q201, 1), new Rule<>("Q202", q202, 1));*/
 
 
     }
@@ -362,7 +510,7 @@ public class DataManager {
         //Если хоть один дочерний элемент известен и не соответствует правилу,
         //то текущее правило тоже не работает
         if (rule.getOperation() == Rule.Operation.AND && checkEvenOneChildrenUsed(node) && !rule.isUsed()) {
-            for(TreeItem<Rule> innerItem : node.getChildren()) {
+            for (TreeItem<Rule> innerItem : node.getChildren()) {
                 Rule innerRule = innerItem.getValue();
                 if (innerRule.isUsed() && !innerRule.isEqualToAttribute()) {
                     rule.setUsed(true);
@@ -375,12 +523,16 @@ public class DataManager {
         //Если хоть один дочерний элемент известен и соответствует правилу,
         //то текущее правило должно отработать
         if (rule.getOperation() == Rule.Operation.OR && checkEvenOneChildrenUsed(node) && !rule.isUsed()) {
-            for(TreeItem<Rule> innerItem : node.getChildren()) {
-                Rule innerRule = innerItem.getValue();
-                if (innerRule.isUsed() && innerRule.isEqualToAttribute()) {
-                    rule.setUsed(true);
-                    rule.setValueToAttribute();
-                    break;
+            if (checkAllChildrenUsed(node)) {
+                rule.setUsed(true);
+            } else {
+                for (TreeItem<Rule> innerItem : node.getChildren()) {
+                    Rule innerRule = innerItem.getValue();
+                    if (innerRule.isUsed() && innerRule.isEqualToAttribute()) {
+                        rule.setUsed(true);
+                        rule.setValueToAttribute();
+                        break;
+                    }
                 }
             }
         }
@@ -402,6 +554,7 @@ public class DataManager {
 
     /**
      * Функция, проверяющая отработало ли хоть одно дочернее правило
+     *
      * @param node - узел, для которого проводится проверка
      * @return true - если хоть одно дочернее правило отработало
      * false - если не отработало ни одно правило
@@ -415,12 +568,13 @@ public class DataManager {
 
     /**
      * Функция, проверяющая отработали ли все дочерние правила
+     *
      * @param node - узел, для которого проводится проверка
      * @return true - если отработали все дочерние правила
      * false - если хоть одно дочернее правило не отработало
      */
     private static boolean checkAllChildrenUsed(TreeItem<Rule> node) {
-        for(TreeItem<Rule> innerItem : node.getChildren())
+        for (TreeItem<Rule> innerItem : node.getChildren())
             if (!innerItem.getValue().isUsed())
                 return false;
         return true;
@@ -428,6 +582,7 @@ public class DataManager {
 
     /**
      * Функция, возвращающая объект, в ветке которого осталось минимум неотвеченных вопросов
+     *
      * @param root - корневой узел, в котором осуществляется поиск объектов
      * @return дерево с минимальным количеством неотвеченных вопросов
      */
@@ -466,6 +621,9 @@ public class DataManager {
         return tmpCount;
     }
 
+    /**
+     * Функция, запускающая рекурсивную функцию сброса дерева
+     */
     public static void reset() {
         reset(tree);
         processAllRules(tree);
@@ -480,7 +638,7 @@ public class DataManager {
 
     public static int getIsUsedCountforObjects() {
         int count = 0;
-        for (TreeItem<Rule> i: tree.getChildren()) {
+        for (TreeItem<Rule> i : tree.getChildren()) {
             if (!i.getValue().isUsed()) {
                 count++;
             }

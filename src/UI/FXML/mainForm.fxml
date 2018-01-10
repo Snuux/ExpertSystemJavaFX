@@ -38,9 +38,9 @@
 
     <VBox fx:id="questionBox" alignment="TOP_CENTER" spacing="4">
         <children>
-            <Label fx:id="questionLabelLol" alignment="CENTER" contentDisplay="CENTER" text="Вопрос:" textAlignment="CENTER" />
+            <Label fx:id="questionLabelLol" alignment="CENTER" contentDisplay="CENTER" text="Вопрос:" textAlignment="CENTER" wrapText="true" />
 
-            <Label fx:id="questionLabel" alignment="CENTER" text="Текст вопроса?" textAlignment="CENTER">
+            <Label fx:id="questionLabel" alignment="CENTER" snapToPixel="false" text="Текст вопроса?" textAlignment="CENTER">
                 <VBox.margin>
                     <Insets top="10.0" />
                 </VBox.margin></Label>
